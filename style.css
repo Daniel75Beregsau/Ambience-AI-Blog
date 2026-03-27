@@ -124,7 +124,8 @@ p { margin: 0 0 1em; }
 }
 .hero-partners img:hover { opacity: 1; }
 .hero-partners img[alt="UCL"],
-.hero-partners img[alt="Intel"] {
+.hero-partners img[alt="Intel"],
+.hero-partners img[alt="NHS"] {
   filter: brightness(0) invert(1);
 }
 .hero-screenshots {
