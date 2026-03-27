@@ -1,0 +1,203 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="760" viewBox="0 0 1000 760" font-family="Arial, sans-serif">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#005EB8"/>
+    </marker>
+    <marker id="arrowhead-return" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#888"/>
+    </marker>
+    <marker id="arrowhead-async" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#005EB8"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1000" height="760" fill="#F0F4F5"/>
+
+  <!-- Title bar -->
+  <rect x="0" y="0" width="1000" height="52" fill="#005EB8"/>
+  <text x="500" y="33" text-anchor="middle" font-size="18" font-weight="bold" fill="white">Sequence Diagram — GP Query Workflow</text>
+
+  <!-- ====== PARTICIPANT HEADERS ====== -->
+  <!-- x positions: GP=80, Frontend=230, Backend=390, RAG=550, LLM=720, DB=890 -->
+
+  <!-- GP -->
+  <rect x="30" y="62" width="100" height="40" rx="6" fill="#003087" stroke="#005EB8" stroke-width="1.5"/>
+  <text x="80" y="87" text-anchor="middle" font-size="12" font-weight="bold" fill="white">GP (Browser)</text>
+
+  <!-- Frontend -->
+  <rect x="175" y="62" width="110" height="40" rx="6" fill="#005EB8" stroke="#003087" stroke-width="1.5"/>
+  <text x="230" y="80" text-anchor="middle" font-size="11" font-weight="bold" fill="white">Frontend</text>
+  <text x="230" y="94" text-anchor="middle" font-size="10" fill="#cce" >(React)</text>
+
+  <!-- Backend -->
+  <rect x="335" y="62" width="110" height="40" rx="6" fill="#005EB8" stroke="#003087" stroke-width="1.5"/>
+  <text x="390" y="80" text-anchor="middle" font-size="11" font-weight="bold" fill="white">Backend</text>
+  <text x="390" y="94" text-anchor="middle" font-size="10" fill="#cce">(FastAPI)</text>
+
+  <!-- RAG Service -->
+  <rect x="495" y="62" width="110" height="40" rx="6" fill="#005EB8" stroke="#003087" stroke-width="1.5"/>
+  <text x="550" y="80" text-anchor="middle" font-size="11" font-weight="bold" fill="white">RAG Service</text>
+  <text x="550" y="94" text-anchor="middle" font-size="10" fill="#cce">(FastAPI)</text>
+
+  <!-- Med42 LLM -->
+  <rect x="665" y="62" width="110" height="40" rx="6" fill="#336791" stroke="#003087" stroke-width="1.5"/>
+  <text x="720" y="80" text-anchor="middle" font-size="11" font-weight="bold" fill="white">Med42 LLM</text>
+  <text x="720" y="94" text-anchor="middle" font-size="10" fill="#cce">(Ollama)</text>
+
+  <!-- PostgreSQL -->
+  <rect x="835" y="62" width="110" height="40" rx="6" fill="#336791" stroke="#003087" stroke-width="1.5"/>
+  <text x="890" y="80" text-anchor="middle" font-size="11" font-weight="bold" fill="white">PostgreSQL</text>
+  <text x="890" y="94" text-anchor="middle" font-size="10" fill="#cce">+ pgvector</text>
+
+  <!-- ====== LIFELINES ====== -->
+  <line x1="80"  y1="102" x2="80"  y2="740" stroke="#003087" stroke-width="1.5" stroke-dasharray="6,4"/>
+  <line x1="230" y1="102" x2="230" y2="740" stroke="#005EB8" stroke-width="1.5" stroke-dasharray="6,4"/>
+  <line x1="390" y1="102" x2="390" y2="740" stroke="#005EB8" stroke-width="1.5" stroke-dasharray="6,4"/>
+  <line x1="550" y1="102" x2="550" y2="740" stroke="#005EB8" stroke-width="1.5" stroke-dasharray="6,4"/>
+  <line x1="720" y1="102" x2="720" y2="740" stroke="#336791" stroke-width="1.5" stroke-dasharray="6,4"/>
+  <line x1="890" y1="102" x2="890" y2="740" stroke="#336791" stroke-width="1.5" stroke-dasharray="6,4"/>
+
+  <!-- ====== STEP LABELS (right margin notes) ====== -->
+
+  <!-- Step number helper: small circles on left -->
+  <!-- Y positions: 130, 160, 195, 230, 265, 300, 330, 360, 395, 430, 465, 500, 535, 565, 600, 640 -->
+
+  <!-- ── 1: GP fills form ── -->
+  <rect x="16" y="119" width="26" height="20" rx="10" fill="#005EB8"/>
+  <text x="29" y="133" text-anchor="middle" font-size="10" font-weight="bold" fill="white">1</text>
+  <!-- Activation box on GP -->
+  <rect x="74" y="122" width="12" height="28" fill="#003087" opacity="0.4"/>
+  <text x="230" y="118" text-anchor="middle" font-size="9" fill="#888">GP fills consultation form</text>
+  <line x1="86" y1="136" x2="224" y2="136" stroke="#005EB8" stroke-width="1.8" marker-end="url(#arrowhead)"/>
+  <text x="155" y="130" text-anchor="middle" font-size="10" fill="#003087">Submit form</text>
+
+  <!-- ── 2: POST /chats/ ── -->
+  <rect x="16" y="153" width="26" height="20" rx="10" fill="#005EB8"/>
+  <text x="29" y="167" text-anchor="middle" font-size="10" font-weight="bold" fill="white">2</text>
+  <rect x="224" y="140" width="12" height="50" fill="#005EB8" opacity="0.3"/>
+  <line x1="236" y1="164" x2="384" y2="164" stroke="#005EB8" stroke-width="1.8" marker-end="url(#arrowhead)"/>
+  <text x="310" y="158" text-anchor="middle" font-size="10" fill="#003087">POST /chats/</text>
+
+  <!-- ── 3: Backend saves + returns chat_id ── -->
+  <rect x="16" y="183" width="26" height="20" rx="10" fill="#005EB8"/>
+  <text x="29" y="197" text-anchor="middle" font-size="10" font-weight="bold" fill="white">3</text>
+  <rect x="384" y="168" width="12" height="68" fill="#005EB8" opacity="0.3"/>
+  <!-- Backend → PostgreSQL -->
+  <line x1="396" y1="193" x2="884" y2="193" stroke="#005EB8" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+  <text x="640" y="187" text-anchor="middle" font-size="10" fill="#003087">INSERT chat record</text>
+  <!-- PostgreSQL returns -->
+  <line x1="884" y1="210" x2="396" y2="210" stroke="#888" stroke-width="1.2" stroke-dasharray="5,3" marker-end="url(#arrowhead-return)"/>
+  <text x="640" y="222" text-anchor="middle" font-size="10" fill="#666">chat_id returned</text>
+  <!-- Backend → Frontend return -->
+  <line x1="384" y1="232" x2="236" y2="232" stroke="#888" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrowhead-return)"/>
+  <text x="310" y="226" text-anchor="middle" font-size="10" fill="#666">{ chat_id }</text>
+
+  <!-- ── 4: Navigate to chat page ── -->
+  <rect x="16" y="248" width="26" height="20" rx="10" fill="#005EB8"/>
+  <text x="29" y="262" text-anchor="middle" font-size="10" font-weight="bold" fill="white">4</text>
+  <line x1="224" y1="260" x2="86" y2="260" stroke="#888" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrowhead-return)"/>
+  <text x="155" y="254" text-anchor="middle" font-size="10" fill="#666">Navigate /gp/query/:id</text>
+
+  <!-- ── 5: SSE connection ── -->
+  <rect x="16" y="278" width="26" height="20" rx="10" fill="#005EB8"/>
+  <text x="29" y="292" text-anchor="middle" font-size="10" font-weight="bold" fill="white">5</text>
+  <line x1="86" y1="290" x2="224" y2="290" stroke="#005EB8" stroke-width="1.8" marker-end="url(#arrowhead)"/>
+  <text x="155" y="283" text-anchor="middle" font-size="10" fill="#003087">open SSE connection</text>
+  <line x1="236" y1="300" x2="384" y2="300" stroke="#005EB8" stroke-width="1.8" marker-end="url(#arrowhead)"/>
+  <text x="310" y="294" text-anchor="middle" font-size="10" fill="#003087">GET /chats/{id}/stream?token=JWT</text>
+  <!-- SSE ack back -->
+  <line x1="384" y1="312" x2="236" y2="312" stroke="#888" stroke-width="1.2" stroke-dasharray="5,3" marker-end="url(#arrowhead-return)"/>
+  <text x="310" y="325" text-anchor="middle" font-size="10" fill="#666">200 OK  text/event-stream</text>
+
+  <!-- ── 6: GP types message ── -->
+  <rect x="16" y="342" width="26" height="20" rx="10" fill="#005EB8"/>
+  <text x="29" y="356" text-anchor="middle" font-size="10" font-weight="bold" fill="white">6</text>
+  <rect x="74" y="345" width="12" height="22" fill="#003087" opacity="0.35"/>
+  <line x1="86" y1="356" x2="224" y2="356" stroke="#005EB8" stroke-width="1.8" marker-end="url(#arrowhead)"/>
+  <text x="155" y="349" text-anchor="middle" font-size="10" fill="#003087">Type + send message</text>
+
+  <!-- ── 7: POST /chats/{id}/message ── -->
+  <rect x="16" y="372" width="26" height="20" rx="10" fill="#005EB8"/>
+  <text x="29" y="386" text-anchor="middle" font-size="10" font-weight="bold" fill="white">7</text>
+  <line x1="236" y1="382" x2="384" y2="382" stroke="#005EB8" stroke-width="1.8" marker-end="url(#arrowhead)"/>
+  <text x="310" y="376" text-anchor="middle" font-size="10" fill="#003087">POST /chats/{id}/message</text>
+
+  <!-- ── 8: Save message ── -->
+  <rect x="16" y="402" width="26" height="20" rx="10" fill="#005EB8"/>
+  <text x="29" y="416" text-anchor="middle" font-size="10" font-weight="bold" fill="white">8</text>
+  <line x1="396" y1="412" x2="884" y2="412" stroke="#005EB8" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+  <text x="640" y="406" text-anchor="middle" font-size="10" fill="#003087">INSERT message record</text>
+
+  <!-- ── 9: POST /answer to RAG ── -->
+  <rect x="16" y="430" width="26" height="20" rx="10" fill="#005EB8"/>
+  <text x="29" y="444" text-anchor="middle" font-size="10" font-weight="bold" fill="white">9</text>
+  <line x1="396" y1="442" x2="544" y2="442" stroke="#005EB8" stroke-width="1.8" marker-end="url(#arrowhead)"/>
+  <text x="470" y="436" text-anchor="middle" font-size="10" fill="#003087">POST /answer  { context, query }</text>
+
+  <!-- ── 10: RAG queries embeddings ── -->
+  <rect x="16" y="458" width="26" height="20" rx="10" fill="#005EB8"/>
+  <text x="29" y="472" text-anchor="middle" font-size="10" font-weight="bold" fill="white">10</text>
+  <rect x="544" y="445" width="12" height="88" fill="#005EB8" opacity="0.3"/>
+  <line x1="556" y1="470" x2="884" y2="470" stroke="#005EB8" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+  <text x="720" y="464" text-anchor="middle" font-size="10" fill="#003087">SELECT similar embeddings</text>
+  <line x1="884" y1="484" x2="556" y2="484" stroke="#888" stroke-width="1.2" stroke-dasharray="5,3" marker-end="url(#arrowhead-return)"/>
+  <text x="720" y="478" text-anchor="middle" font-size="10" fill="#666">top-k doc chunks</text>
+
+  <!-- ── 11: Forward to LLM ── -->
+  <rect x="16" y="498" width="26" height="20" rx="10" fill="#005EB8"/>
+  <text x="29" y="512" text-anchor="middle" font-size="10" font-weight="bold" fill="white">11</text>
+  <line x1="556" y1="510" x2="714" y2="510" stroke="#005EB8" stroke-width="1.8" marker-end="url(#arrowhead)"/>
+  <text x="635" y="504" text-anchor="middle" font-size="10" fill="#003087">Prompt + retrieved context</text>
+
+  <!-- ── 12: LLM streams tokens ── -->
+  <rect x="16" y="526" width="26" height="20" rx="10" fill="#005EB8"/>
+  <text x="29" y="540" text-anchor="middle" font-size="10" font-weight="bold" fill="white">12</text>
+  <rect x="714" y="513" width="12" height="36" fill="#336791" opacity="0.4"/>
+  <line x1="714" y1="536" x2="558" y2="536" stroke="#888" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrowhead-return)"/>
+  <text x="635" y="529" text-anchor="middle" font-size="10" fill="#666">stream tokens (SSE / chunked)</text>
+
+  <!-- ── 13: RAG returns response ── -->
+  <rect x="16" y="552" width="26" height="20" rx="10" fill="#005EB8"/>
+  <text x="29" y="566" text-anchor="middle" font-size="10" font-weight="bold" fill="white">13</text>
+  <line x1="544" y1="562" x2="396" y2="562" stroke="#888" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrowhead-return)"/>
+  <text x="470" y="556" text-anchor="middle" font-size="10" fill="#666">assembled response text</text>
+
+  <!-- ── 14: Backend streams via SSE ── -->
+  <rect x="16" y="578" width="26" height="20" rx="10" fill="#005EB8"/>
+  <text x="29" y="592" text-anchor="middle" font-size="10" font-weight="bold" fill="white">14</text>
+  <!-- Backend also saves final message -->
+  <line x1="396" y1="588" x2="884" y2="588" stroke="#005EB8" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#arrowhead)"/>
+  <text x="640" y="582" text-anchor="middle" font-size="10" fill="#888">INSERT AI message to DB</text>
+  <line x1="384" y1="604" x2="236" y2="604" stroke="#005EB8" stroke-width="1.8" stroke-dasharray="3,2" marker-end="url(#arrowhead)"/>
+  <text x="310" y="598" text-anchor="middle" font-size="10" fill="#003087">SSE data: token token token...</text>
+
+  <!-- ── 15: Frontend renders tokens ── -->
+  <rect x="16" y="620" width="26" height="20" rx="10" fill="#005EB8"/>
+  <text x="29" y="634" text-anchor="middle" font-size="10" font-weight="bold" fill="white">15</text>
+  <line x1="224" y1="632" x2="86" y2="632" stroke="#888" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrowhead-return)"/>
+  <text x="155" y="626" text-anchor="middle" font-size="10" fill="#666">render tokens in real-time</text>
+
+  <!-- ── 16: GP sees response ── -->
+  <rect x="16" y="648" width="26" height="20" rx="10" fill="#005EB8"/>
+  <text x="29" y="662" text-anchor="middle" font-size="10" font-weight="bold" fill="white">16</text>
+  <rect x="74" y="651" width="12" height="26" fill="#003087" opacity="0.35"/>
+  <text x="155" y="672" text-anchor="middle" font-size="11" font-weight="bold" fill="#003087">GP sees completed AI response</text>
+  <!-- Visual "done" note -->
+  <rect x="35" y="680" width="110" height="24" rx="5" fill="#003087"/>
+  <text x="90" y="696" text-anchor="middle" font-size="10" font-weight="bold" fill="white">Response complete</text>
+
+  <!-- Activation boxes (Backend) -->
+  <rect x="384" y="164" width="12" height="454" fill="#005EB8" opacity="0.15"/>
+
+  <!-- Legend -->
+  <rect x="550" y="700" width="430" height="46" rx="6" fill="white" stroke="#ccc" stroke-width="1"/>
+  <line x1="565" y1="718" x2="595" y2="718" stroke="#005EB8" stroke-width="1.8" marker-end="url(#arrowhead)"/>
+  <text x="605" y="722" font-size="10" fill="#333">Synchronous call</text>
+  <line x1="700" y1="718" x2="730" y2="718" stroke="#888" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrowhead-return)"/>
+  <text x="740" y="722" font-size="10" fill="#333">Return / response</text>
+  <line x1="565" y1="736" x2="595" y2="736" stroke="#005EB8" stroke-width="1.8" stroke-dasharray="3,2" marker-end="url(#arrowhead)"/>
+  <text x="605" y="740" font-size="10" fill="#333">SSE / streaming</text>
+  <rect x="710" y="728" width="10" height="14" fill="#005EB8" opacity="0.3"/>
+  <text x="726" y="740" font-size="10" fill="#333">Activation box</text>
+</svg>

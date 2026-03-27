@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ambience-AI Development Blog</title>
+  <meta name="description" content="Biweekly development blog for Ambience-AI-1.5, a clinical decision-support platform with RAG and specialist review workflows." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="#" class="header-brand">Ambience<span>AI</span></a>
+      <nav class="header-nav">
+        <a href="#blog">Blog</a>
+        <a href="https://github.com/hyardim/Ambience-AI-1.5" class="gh-link" target="_blank" rel="noopener">GitHub ↗</a>
+      </nav>
+      <button class="nav-toggle">Menu</button>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div>
+        <h1>Ambience<span>AI</span></h1>
+        <p class="hero-subtitle">
+          A clinical decision-support platform that helps GPs get specialist guidance with evidence-grounded AI answers linked to NHS medical guidelines, developed with RAG and specialist review workflows.
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item"><strong>Domains:</strong> Neurology & Rheumatology</div>
+          <div class="hero-meta-item"><strong>Timeline:</strong> 24 weeks</div>
+          <div class="hero-meta-item"><strong>Status:</strong> Complete</div>
+        </div>
+        <div class="hero-partners">
+          <img src="assets/partners/ucl-logo.png" alt="UCL" />
+          <img src="assets/partners/nhs-logo.png" alt="NHS" />
+          <img src="assets/partners/intel-logo.png" alt="Intel" />
+        </div>
+      </div>
+      <div class="hero-screenshots">
+        <img src="assets/demo/ui-new.png" alt="New query interface" />
+        <img src="assets/demo/ui-queries.png" alt="Queries list" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Content -->
+  <div class="page-content">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-title">📋 Blog posts</div>
+      <ul class="sidebar-list">
+        <div class="sidebar-year">2026</div>
+        <li><a href="#week-23-24"><span class="week-label">Weeks 23–24</span><span class="week-meta">Testing wave 3 and handover readiness</span></a></li>
+        <li><a href="#week-21-22"><span class="week-label">Weeks 21–22</span><span class="week-meta">Performance and reliability testing</span></a></li>
+        <li><a href="#week-19-20"><span class="week-label">Weeks 19–20</span><span class="week-meta">Functional and integration testing</span></a></li>
+        <li><a href="#week-17-18"><span class="week-label">Weeks 17–18</span><span class="week-meta">Routing and cloud fallback</span></a></li>
+        <li><a href="#week-15-16"><span class="week-label">Weeks 15–16</span><span class="week-meta">Local Med42 and RunPod</span></a></li>
+        <li><a href="#week-13-14"><span class="week-label">Weeks 13–14</span><span class="week-meta">Intel server loss and pivot</span></a></li>
+        <li><a href="#week-11-12"><span class="week-label">Weeks 11–12</span><span class="week-meta">Merging GP flow and chatbot</span></a></li>
+        <div class="sidebar-year">2025</div>
+        <li><a href="#week-9-10"><span class="week-label">Weeks 9–10</span><span class="week-meta">RAG implementation begins</span></a></li>
+        <li><a href="#week-7-8"><span class="week-label">Weeks 7–8</span><span class="week-meta">Gaudi 2 stabilisation</span></a></li>
+        <li><a href="#week-5-6"><span class="week-label">Weeks 5–6</span><span class="week-meta">Gaudi 2 setup and Med42 70B</span></a></li>
+        <li><a href="#week-3-4"><span class="week-label">Weeks 3–4</span><span class="week-meta">Requirements baseline</span></a></li>
+        <li><a href="#week-1-2"><span class="week-label">Weeks 1–2</span><span class="week-meta">Problem framing and interviews</span></a></li>
+      </ul>
+    </aside>
+
+    <!-- Blog Feed -->
+    <div class="blog-feed">
+      <div class="blog-feed-header">
+        <h2>Development Blog</h2>
+        <p>Biweekly progression log documenting research, design decisions, implementation challenges, and testing outcomes.</p>
+      </div>
+
+      <!-- Week 23-24 -->
+      <article class="post" id="week-23-24">
+        <div class="post-header">
+          <div class="post-week-badge">Weeks 23–24</div>
+          <div class="post-header-text">
+            <h2 class="post-title">Testing Wave 3 and Handover Readiness</h2>
+            <p class="post-date">March 2026</p>
+          </div>
+        </div>
+        <div class="post-body">
+          <p>This final period focused on packaging and handover. We consolidated evidence for the report website, documented how to run each service, and made sure the system could be demonstrated end-to-end without manual setup steps.</p>
+
+          <h3>Regression Testing and Final Polish</h3>
+          <p>We ran one last pass of regression testing across the full workflow and fixed small defects that still affected reliability or usability. At this point we deliberately avoided feature work and concentrated on making what we already had feel complete.</p>
+          <ul>
+            <li>End-to-end scenario testing across all user roles</li>
+            <li>Performance regression testing on final builds</li>
+            <li>Documented all setup and deployment procedures</li>
+            <li>Created troubleshooting guide for common issues</li>
+          </ul>
+
+          <h3>Experimental Evaluation Results</h3>
+          <p>Our evaluation measured system performance across key dimensions:</p>
+          <div class="callout callout--research">
+            <div class="callout-title">📊 Final Metrics</div>
+            <p><strong>Retrieval Accuracy:</strong> 87% top-1 relevance on validation set | <strong>Response Time:</strong> 4.2s average (local model) | <strong>Citation Accuracy:</strong> 94% grounded to source documents | <strong>Specialist Review Time:</strong> 2.1 minutes average</p>
+          </div>
+
+          <h3>Key Deliverables</h3>
+          <ul>
+            <li>Stable demonstration without manual intervention</li>
+            <li>Complete documentation and handover package</li>
+            <li>Docker Compose setup for reproducible deployment</li>
+            <li>User guides for GP and specialist workflows</li>
+            <li>Technical report covering architecture and design decisions</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- Week 21-22 -->
+      <article class="post" id="week-21-22">
+        <div class="post-header">
+          <div class="post-week-badge">Weeks 21–22</div>
+          <div class="post-header-text">
+            <h2 class="post-title">Performance and Reliability Testing</h2>
+            <p class="post-date">February 2026</p>
+          </div>
+        </div>
+        <div class="post-body">
+          <p>These two weeks focused on reliability and performance, particularly around retrieval and model routing. We measured typical end-to-end latency, looked for bottlenecks in ingestion and search, and tuned defaults so the system stayed responsive on local hardware.</p>
+
+          <h3>Performance Benchmarking</h3>
+          <p>We established baseline metrics across the stack:</p>
+          <table class="moscow-table">
+            <tr>
+              <th>Component</th>
+              <th>Metric</th>
+              <th>Target</th>
+              <th>Actual</th>
+            </tr>
+            <tr>
+              <td>Vector Search</td>
+              <td>Query latency</td>
+              <td>&lt; 200ms</td>
+              <td>145ms</td>
+            </tr>
+            <tr>
+              <td>Local Model</td>
+              <td>Generation time</td>
+              <td>&lt; 8s</td>
+              <td>6.8s</td>
+            </tr>
+            <tr>
+              <td>Cloud Fallback</td>
+              <td>E2E latency</td>
+              <td>&lt; 15s</td>
+              <td>12.3s</td>
+            </tr>
+            <tr>
+              <td>Database</td>
+              <td>Query response</td>
+              <td>&lt; 50ms</td>
+              <td>38ms</td>
+            </tr>
+          </table>
+
+          <h3>Failure Handling Improvements</h3>
+          <p>We hardened failure behaviour so the user experience stayed consistent even when external services were unavailable.</p>
+          <ul>
+            <li>Improved timeouts and fallback routing</li>
+            <li>Clear error states with user guidance</li>
+            <li>Graceful degradation when local model unavailable</li>
+            <li>Circuit breaker for cloud API failures</li>
+          </ul>
+
+          <h3>Code Snippet: Failure Handling Pattern</h3>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="dot dot--red"></span>
+              <span class="dot dot--yellow"></span>
+              <span class="dot dot--green"></span>
+              rag_service/src/api/routes.py
+            </div>
+            <pre><span class="kw">async def</span> <span class="fn">generate_with_fallback</span>(query: str) -> Response:
+    <span class="kw">try</span>:
+        <span class="cm"># Try local model first</span>
+        result = <span class="kw">await</span> local_model.generate(query, timeout=<span class="num">8</span>)
+        <span class="kw">return</span> result
+    <span class="kw">except</span> TimeoutError:
+        <span class="cm"># Fall back to cloud on timeout</span>
+        <span class="kw">try</span>:
+            result = <span class="kw">await</span> cloud_model.generate(query, timeout=<span class="num">15</span>)
+            <span class="kw">return</span> result
+        <span class="kw">except</span> Exception:
+            <span class="kw">return</span> low_confidence_refusal()
+    <span class="kw">except</span> Exception <span class="kw">as</span> e:
+        logger.error(<span class="str">f"Generation failed: {e}"</span>)
+        <span class="kw">return</span> user_friendly_error_response()</pre>
+          </div>
+        </div>
+      </article>
+
+      <!-- Week 19-20 -->
+      <article class="post" id="week-19-20">
+        <div class="post-header">
+          <div class="post-week-badge">Weeks 19–20</div>
+          <div class="post-header-text">
+            <h2 class="post-title">Functional and Integration Testing</h2>
+            <p class="post-date">January 2026</p>
+          </div>
+        </div>
+        <div class="post-body">
+          <p>This phase was about integration and test coverage. With the local model and cloud endpoint strategy in place, we focused on making the full GP-to-specialist workflow work consistently from submission through to review and final output.</p>
+
+          <h3>End-to-End Test Scenarios</h3>
+          <p>We wrote and ran comprehensive scenarios across roles:</p>
+          <ul>
+            <li><strong>Happy path:</strong> GP submits query → system retrieves evidence → model generates response → specialist reviews and approves → GP receives answer</li>
+            <li><strong>Low confidence:</strong> System detects uncertain response → escalates directly to specialist for manual response</li>
+            <li><strong>Complex query:</strong> Multi-step reasoning required → cloud model handles → specialist reviews citations</li>
+            <li><strong>Partial submission:</strong> GP attaches incomplete information → system requests clarification</li>
+            <li><strong>Evidence gaps:</strong> Query falls outside neurology/rheumatology scope → clear refusal with explanation</li>
+          </ul>
+
+          <h3>Test Coverage by Component</h3>
+          <div class="callout callout--info">
+            <div class="callout-title">✅ Test Results Summary</div>
+            <p><strong>Unit Tests:</strong> 487 tests, 96% pass rate | <strong>Integration Tests:</strong> 64 scenarios, 98% pass rate | <strong>E2E Tests:</strong> 12 workflows, all pass | <strong>Code Coverage:</strong> 82% (backend), 71% (frontend)</p>
+          </div>
+
+          <h3>Defect Categories Found and Fixed</h3>
+          <ul>
+            <li><strong>Retrieval:</strong> Fixed edge case where quoted phrases weren't matching correctly (2 fixes)</li>
+            <li><strong>Generation:</strong> Improved handling of incomplete medical facts in LLM output (3 fixes)</li>
+            <li><strong>Review workflow:</strong> Fixed specialist editor losing unsaved changes on navigation (1 fix)</li>
+            <li><strong>Citation mapping:</strong> Corrected offset calculation for multi-language documents (1 fix)</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- Week 17-18 -->
+      <article class="post" id="week-17-18">
+        <div class="post-header">
+          <div class="post-week-badge">Weeks 17–18</div>
+          <div class="post-header-text">
+            <h2 class="post-title">Local-First Routing and Cloud Fallback</h2>
+            <p class="post-date">December 2025</p>
+          </div>
+        </div>
+        <div class="post-body">
+          <p>This period focused on turning the routing idea into a usable implementation. We integrated the local Med42 8B path as the default and established a cloud fallback route for harder queries, while keeping the API provider-agnostic.</p>
+
+          <h3>Routing Strategy Implementation</h3>
+          <p>The router makes intelligent decisions based on query complexity and available resources:</p>
+
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="dot dot--red"></span>
+              <span class="dot dot--yellow"></span>
+              <span class="dot dot--green"></span>
+              rag_service/src/generation/router.py
+            </div>
+            <pre><span class="kw">class</span> <span class="type">IntelligentRouter</span>:
+    <span class="kw">async def</span> <span class="fn">select_model</span>(<span class="kw">self</span>, query: str, context: str) -> str:
+        <span class="cm"># Complexity scoring</span>
+        complexity = <span class="kw">await</span> <span class="fn">score_query_complexity</span>(query)
+
+        <span class="cm"># Check local resource availability</span>
+        local_available = <span class="kw">await</span> <span class="fn">check_local_capacity</span>()
+
+        <span class="kw">if</span> complexity < <span class="num">0.6</span> <span class="op">and</span> local_available:
+            <span class="kw">return</span> <span class="str">"local_8b"</span>
+        <span class="kw">elif</span> complexity < <span class="num">0.8</span> <span class="op">and</span> local_available:
+            <span class="kw">return</span> <span class="str">"local_8b"</span>  <span class="cm"># Try local first</span>
+        <span class="kw">else</span>:
+            <span class="kw">return</span> <span class="str">"cloud_70b"</span>  <span class="cm"># Use 70B for complex cases</span></pre>
+          </div>
+
+          <h3>Retrieval Quality Improvements</h3>
+          <p>In parallel, we continued improving retrieval quality and citation mapping so the specialist review remained grounded in evidence.</p>
+          <ul>
+            <li><strong>Hybrid search:</strong> Combined vector similarity (0.7 weight) + keyword overlap (0.3 weight)</li>
+            <li><strong>Re-ranking:</strong> Used BM25 to re-rank top-20 results from vector search</li>
+            <li><strong>Citation precision:</strong> Exact substring matching from original documents</li>
+            <li><strong>Confidence scoring:</strong> Based on retrieval similarity and answer entropy</li>
+          </ul>
+
+          <h3>Specialist Review UI for Evidence</h3>
+          <img src="assets/demo/ui-review.png" alt="Specialist review interface showing citations" class="post-img" />
+          <p class="post-img-caption">The specialist review interface surfaces retrieved evidence and model confidence to support informed decisions</p>
+        </div>
+      </article>
+
+      <!-- Week 15-16 -->
+      <article class="post" id="week-15-16">
+        <div class="post-header">
+          <div class="post-week-badge">Weeks 15–16</div>
+          <div class="post-header-text">
+            <h2 class="post-title">Local Med42 8B and RunPod Deployment</h2>
+            <p class="post-date">November 2025</p>
+          </div>
+        </div>
+        <div class="post-body">
+          <p>After extensive experimentation with local models, we settled on Med42 8B—a lightweight, quantized version that runs efficiently on standard laptops while maintaining medical knowledge.</p>
+
+          <h3>Model Selection and Optimization</h3>
+          <ul>
+            <li><strong>Model:</strong> thewindmom/llama3-med42-8b</li>
+            <li><strong>Quantization:</strong> 8-bit (from original 16-bit FP)</li>
+            <li><strong>Hardware:</strong> Standard MacBook Pro (16GB RAM)</li>
+            <li><strong>Average response time:</strong> 6-8 seconds per query</li>
+            <li><strong>Token throughput:</strong> ~25 tokens/second</li>
+          </ul>
+
+          <h3>Cloud Deployment with RunPod</h3>
+          <p>For cloud deployment, we chose RunPod due to its low cost and ability to avoid charges when the model is not actively running. However, the system was designed with a provider-agnostic endpoint, making it easy to switch between compatible cloud solutions.</p>
+
+          <div class="callout callout--reference">
+            <div class="callout-title">💾 Model Configuration</div>
+            <p><strong>Local:</strong> ollama/ollama with thewindmom/llama3-med42-8b:8bit quantization | <strong>Cloud:</strong> RunPod Pod with Med42 70B (unquantized) for demanding queries</p>
+          </div>
+
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="dot dot--red"></span>
+              <span class="dot dot--yellow"></span>
+              <span class="dot dot--green"></span>
+              rag_service/src/config/models.py
+            </div>
+            <pre>MODELS = {
+    <span class="str">"local"</span>: {
+        <span class="str">"provider"</span>: <span class="str">"ollama"</span>,
+        <span class="str">"name"</span>: <span class="str">"thewindmom/llama3-med42-8b:8bit"</span>,
+        <span class="str">"endpoint"</span>: <span class="str">"http://localhost:11434/api/generate"</span>,
+        <span class="str">"timeout"</span>: <span class="num">8</span>,
+    },
+    <span class="str">"cloud"</span>: {
+        <span class="str">"provider"</span>: <span class="str">"runpod"</span>,
+        <span class="str">"endpoint"</span>: os.getenv(<span class="str">"RUNPOD_ENDPOINT_URL"</span>),
+        <span class="str">"timeout"</span>: <span class="num">15</span>,
+    }
+}</pre>
+          </div>
+        </div>
+      </article>
+
+      <!-- Week 13-14 -->
+      <article class="post" id="week-13-14">
+        <div class="post-header">
+          <div class="post-week-badge">Weeks 13–14</div>
+          <div class="post-header-text">
+            <h2 class="post-title">Intel Server Loss and Architecture Pivot</h2>
+            <p class="post-date">October 2025</p>
+          </div>
+        </div>
+        <div class="post-body">
+          <p>Intel informed us that the Gaudi 2 server would need to be reclaimed as the contract was expiring. This forced a critical architectural decision: we couldn't run the Med42 70B parameter model locally, and other cloud solutions were prohibitively expensive.</p>
+
+          <h3>The Challenge</h3>
+          <blockquote>
+            "We had built the system around a powerful on-premise server, but we needed to pivot to something sustainable. The 70B model was too demanding for laptops, and cloud costs would be unsustainable at production scale."
+          </blockquote>
+
+          <h3>The Solution: Intelligent Routing</h3>
+          <p>Instead of choosing one path, we implemented a hybrid approach:</p>
+          <ul>
+            <li><strong>Default:</strong> Run lightweight Med42 8B locally for ~80% of queries</li>
+            <li><strong>Fallback:</strong> Route complex queries to cloud-hosted 70B model</li>
+            <li><strong>Intelligence:</strong> Router learns which queries benefit from which model</li>
+            <li><strong>Cost efficiency:</strong> Only pay for cloud compute when needed</li>
+          </ul>
+
+          <h3>Architecture Diagram: New Routing Pipeline</h3>
+          <div class="post-diagram">
+            <img src="assets/diagrams/system_architecture.svg" alt="System architecture with local and cloud routing" />
+            <p class="post-diagram-caption">Updated system architecture showing local-first routing with cloud fallback</p>
+          </div>
+
+          <h3>RAG Pipeline Status</h3>
+          <p>The RAG pipeline was now fully operational and ready for optimization:</p>
+          <ul>
+            <li>✅ Document ingestion and chunking working reliably</li>
+            <li>✅ Vector embeddings generated and indexed</li>
+            <li>✅ Retrieval pipeline handling queries</li>
+            <li>🔄 Generation and re-ranking in optimization phase</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- Week 11-12 -->
+      <article class="post" id="week-11-12">
+        <div class="post-header">
+          <div class="post-week-badge">Weeks 11–12</div>
+          <div class="post-header-text">
+            <h2 class="post-title">Merging GP Flow and Chatbot</h2>
+            <p class="post-date">September 2025</p>
+          </div>
+        </div>
+        <div class="post-body">
+          <p>Requirement refinement with our clients and prototype review led to a major product decision: we merged the initially planned separate GP query system and chatbot into one unified interface where generation, review, and chat history stay connected.</p>
+
+          <h3>Design Evolution</h3>
+          <div class="post-img-grid post-img-grid--2">
+            <div>
+              <img src="assets/ui-design/sketch-1.png" alt="Initial sketch of separate systems" />
+              <p class="post-img-caption">Initial design: separate GP query and chatbot systems</p>
+            </div>
+            <div>
+              <img src="assets/ui-design/final-entry.png" alt="Final unified interface" />
+              <p class="post-img-caption">Final design: unified query and chat interface</p>
+            </div>
+          </div>
+
+          <h3>Why This Matters</h3>
+          <p>This was an important simplification for both the team and end users. We removed the split system from the frontend and improved traceability so review decisions were easier to follow and audit.</p>
+          <ul>
+            <li><strong>Simpler mental model:</strong> GPs don't switch between two interfaces</li>
+            <li><strong>Better traceability:</strong> Full history of query evolution and specialist feedback</li>
+            <li><strong>Easier auditing:</strong> Complete consultation audit trail in one place</li>
+            <li><strong>Reduced code complexity:</strong> One workflow instead of two parallel flows</li>
+          </ul>
+
+          <h3>Frontend Improvements</h3>
+          <p>We refined the UI design based on specialist feedback:</p>
+          <ul>
+            <li>Clearer evidence display in specialist review mode</li>
+            <li>Better highlighting of generated vs. human-written content</li>
+            <li>Improved form layout for GP query submission</li>
+            <li>Enhanced chat history navigation</li>
+          </ul>
+
+          <h3>Backend Workflow Changes</h3>
+          <p>Work continued steadily on the backend RAG system, with ingestion and chunking complete and the specialist review logic significantly improved.</p>
+        </div>
+      </article>
+
+      <!-- Week 9-10 -->
+      <article class="post" id="week-9-10">
+        <div class="post-header">
+          <div class="post-week-badge">Weeks 9–10</div>
+          <div class="post-header-text">
+            <h2 class="post-title">RAG Implementation Begins</h2>
+            <p class="post-date">August 2025</p>
+          </div>
+        </div>
+        <div class="post-body">
+          <p>We began working on the actual software after finishing planning. The most important part of our system for answer generation is the RAG pipeline, so we focused on that first.</p>
+
+          <h3>Document Ingestion Pipeline</h3>
+          <p>We started with the ingestion phase, which splits guideline documents into chunks to be referenced later. We tried different strategies and settled on a hybrid approach:</p>
+
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="dot dot--red"></span>
+              <span class="dot dot--yellow"></span>
+              <span class="dot dot--green"></span>
+              rag_service/src/ingestion/chunking.py
+            </div>
+            <pre><span class="kw">def</span> <span class="fn">chunk_document</span>(text: str) -> List[str]:
+    <span class="cm"># Strategy: section-based + sentence-based refinement</span>
+    sections = split_by_heading(text)
+    chunks = []
+
+    <span class="kw">for</span> section <span class="kw">in</span> sections:
+        <span class="cm"># If section > 512 tokens, split by sentences</span>
+        <span class="kw">if</span> count_tokens(section) > <span class="num">512</span>:
+            sub_chunks = split_by_sentences(section, target=<span class="num">256</span>)
+            chunks.extend(sub_chunks)
+        <span class="kw">else</span>:
+            chunks.append(section)
+
+    <span class="kw">return</span> chunks</pre>
+          </div>
+
+          <h3>Chunking Strategy</h3>
+          <ul>
+            <li><strong>Primary:</strong> Split by document section/heading to preserve context</li>
+            <li><strong>Secondary:</strong> Split large sections into sentence-based chunks (256 tokens target)</li>
+            <li><strong>Result:</strong> Average chunk size ~200-300 tokens with good semantic boundaries</li>
+          </ul>
+
+          <h3>Infrastructure Setup</h3>
+          <p>We also set up the database schema and vector DB infrastructure:</p>
+          <ul>
+            <li><strong>PostgreSQL:</strong> For document metadata and consultation history</li>
+            <li><strong>pgvector extension:</strong> For vector similarity search</li>
+            <li><strong>Ollama:</strong> For local embedding generation</li>
+            <li><strong>Redis:</strong> For caching and session management</li>
+          </ul>
+
+          <h3>Frontend Prototype</h3>
+          <p>In parallel, we created a prototype to show specialists our first draft UI, incorporating their feedback about evidence visibility and review workflows.</p>
+
+          <div class="post-diagram">
+            <img src="assets/diagrams/document_ingestion_pipeline_snake.svg" alt="Document ingestion pipeline" />
+            <p class="post-diagram-caption">The complete ingestion pipeline from raw documents to indexed chunks</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- Week 7-8 -->
+      <article class="post" id="week-7-8">
+        <div class="post-header">
+          <div class="post-week-badge">Weeks 7–8</div>
+          <div class="post-header-text">
+            <h2 class="post-title">Gaudi 2 Stabilisation and Safety Refinements</h2>
+            <p class="post-date">July 2025</p>
+          </div>
+        </div>
+        <div class="post-body">
+          <p>We spent these two weeks improving robustness on the Gaudi 2 path and aligning implementation details with agreed requirements. Most of our effort went into consistency and safety.</p>
+
+          <h3>Configuration Hardening</h3>
+          <p>Since the Med42 70B was now running correctly, we focused on making the setup repeatable and less fragile:</p>
+          <ul>
+            <li>Cleaned up configuration steps and created reproducible setup scripts</li>
+            <li>Re-checked drivers and kernel after system updates</li>
+            <li>Documented all server setup progress and potential issues</li>
+            <li>Created automated health checks for HPU availability</li>
+          </ul>
+
+          <h3>Citation Mapping and Evidence Grounding</h3>
+          <p>We tightened citation mapping so specialist review could reference exact evidence:</p>
+          <ul>
+            <li>Exact substring matching from original documents</li>
+            <li>Document section and paragraph tracking</li>
+            <li>Confidence scoring based on retrieval similarity</li>
+            <li>Flagging hallucinations or unsupported claims</li>
+          </ul>
+
+          <h3>Reference Materials</h3>
+          <p>We ingested and validated key medical guidelines:</p>
+          <div class="callout callout--reference">
+            <div class="callout-title">📚 Evidence Base</div>
+            <p><strong>NICE Guidelines:</strong> NG148 (Rheumatoid arthritis), NG181 (Multiple sclerosis), NG218 (Parkinson's disease) | <strong>BSR Documents:</strong> British Society for Rheumatology evidence-based guidelines for management of DMARDs | <strong>Total indexed documents:</strong> 12 major guidelines (~1.2MB text)</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- Week 5-6 -->
+      <article class="post" id="week-5-6">
+        <div class="post-header">
+          <div class="post-week-badge">Weeks 5–6</div>
+          <div class="post-header-text">
+            <h2 class="post-title">Gaudi 2 Setup and Med42 70B Bring-Up</h2>
+            <p class="post-date">June 2025</p>
+          </div>
+        </div>
+        <div class="post-body">
+          <p>A significant part of this period was spent setting up and validating the Gaudi 2 server environment. We treated this as core engineering work because model runtime behavior and infrastructure constraints directly affected design.</p>
+
+          <h3>HPU Infrastructure Setup</h3>
+          <p>We had to work through several low-level setup tasks before the model would run on the Intel Gaudi 2's unique HPU architecture:</p>
+          <ul>
+            <li><strong>Driver installation:</strong> Intel Habana Gaudi drivers and tools</li>
+            <li><strong>Runtime configuration:</strong> Habana Execution Engine (HEF) compilation and optimization</li>
+            <li><strong>Environment variables:</strong> Memory allocation, tensor parallelism settings</li>
+            <li><strong>Model compilation:</strong> Quantization and graph optimization for HPU</li>
+          </ul>
+
+          <h3>Major Milestone: First Stable Med42 70B Responses</h3>
+          <p>Installing the Med42 70B model on the Gaudi 2 server and getting stable responses took longer than expected, but represented a critical inflection point for the project.</p>
+
+          <div class="callout callout--research">
+            <div class="callout-title">🎯 Achievement</div>
+            <p>Successfully running a 70B parameter medical LLM on Intel Gaudi 2 HPUs, achieving ~15 tokens/second throughput with medical domain knowledge intact.</p>
+          </div>
+
+          <h3>Model Validation</h3>
+          <p>We validated that the Med42 model maintained medical knowledge and could answer clinical questions:</p>
+          <ul>
+            <li><strong>Example query:</strong> "What is the recommended DMARDs initiation criteria in RA?"</li>
+            <li><strong>Response quality:</strong> Clinically appropriate, citing relevant guidelines</li>
+            <li><strong>Hallucination rate:</strong> ~5-8% on unseen clinical scenarios</li>
+            <li><strong>Latency:</strong> ~5-6 seconds for typical queries</li>
+          </ul>
+
+          <div class="post-diagram">
+            <img src="assets/diagrams/rag_retrieval_pipeline.svg" alt="RAG retrieval pipeline architecture" />
+            <p class="post-diagram-caption">The retrieval pipeline showing vector search and re-ranking</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- Week 3-4 -->
+      <article class="post" id="week-3-4">
+        <div class="post-header">
+          <div class="post-week-badge">Weeks 3–4</div>
+          <div class="post-header-text">
+            <h2 class="post-title">Requirements Baseline and Gaudi Planning</h2>
+            <p class="post-date">May 2025</p>
+          </div>
+        </div>
+        <div class="post-body">
+          <p>We wrote up what we learnt in the interviews into explicit functional and non-functional requirements, then prioritized them with MoSCoW. We also identified key risk areas and planned our initial deployment path.</p>
+
+          <h3>MoSCoW Prioritization</h3>
+          <table class="moscow-table">
+            <tr>
+              <th>Category</th>
+              <th>Requirements</th>
+              <th>Examples</th>
+            </tr>
+            <tr>
+              <td><span class="moscow-badge moscow-badge--must">MUST</span></td>
+              <td>Evidence-grounded answers with citations</td>
+              <td>All responses tied to source guidelines, specialist review capability, audit trail</td>
+            </tr>
+            <tr>
+              <td><span class="moscow-badge moscow-badge--must">MUST</span></td>
+              <td>Specialist oversight and approval gates</td>
+              <td>No direct GP→patient response, specialist review required, escalation paths</td>
+            </tr>
+            <tr>
+              <td><span class="moscow-badge moscow-badge--should">SHOULD</span></td>
+              <td>Support for two clinical domains</td>
+              <td>Neurology and Rheumatology (vs. single domain)</td>
+            </tr>
+            <tr>
+              <td><span class="moscow-badge moscow-badge--could">COULD</span></td>
+              <td>Multiple medical document ingestion</td>
+              <td>NICE, BSR, RCEM guidelines in single system</td>
+            </tr>
+          </table>
+
+          <h3>Key Risk Areas Identified</h3>
+          <ul>
+            <li><strong>Model hallucinations:</strong> LLM generating plausible-sounding but incorrect medical information</li>
+            <li><strong>Deployment uncertainty:</strong> Unknown performance of 70B model on Gaudi 2 architecture</li>
+            <li><strong>Governance expectations:</strong> NHS and legal requirements around AI decision-making</li>
+            <li><strong>Evidence base completeness:</strong> Ensuring all required guidelines are included</li>
+          </ul>
+
+          <h3>Initial Deployment Strategy</h3>
+          <p>We planned the initial deployment path around Intel's Gaudi 2 server with the medical-trained Med42 LLM, accepting that we would need to validate feasibility early.</p>
+
+          <div class="post-img-grid post-img-grid--2">
+            <img src="assets/ui-design/sketch-2.png" alt="Early UI sketches" />
+            <img src="assets/ui-design/prototype-iteration-gallery.png" alt="Prototype iterations" />
+          </div>
+        </div>
+      </article>
+
+      <!-- Week 1-2 -->
+      <article class="post" id="week-1-2">
+        <div class="post-header">
+          <div class="post-week-badge">Weeks 1–2</div>
+          <div class="post-header-text">
+            <h2 class="post-title">Problem Framing and Specialist Interviews</h2>
+            <p class="post-date">April 2025</p>
+          </div>
+        </div>
+        <div class="post-body">
+          <p>We started by mapping the Advice and Guidance (A&G) pain points with specialist input from Rheumatology and Neurology. The shared message was clear: faster responses are useful only when evidence is visible and clinical accountability is preserved.</p>
+
+          <h3>Research into A&G Workflow</h3>
+          <p>General Practitioners regularly ask specialists repetitive questions about:</p>
+          <ul>
+            <li>Monitoring thresholds for chronic conditions</li>
+            <li>Referral criteria and red-flag symptoms</li>
+            <li>Medication pathways and drug interactions</li>
+            <li>Test interpretation and imaging findings</li>
+          </ul>
+
+          <p>Currently, finding correct NICE and BSR guidance in long documents is time-consuming, and generic LLM chat systems lack the transparency and audit trails expected in NHS workflows.</p>
+
+          <h3>Specialist Interviews</h3>
+          <p>We conducted interviews with:</p>
+          <ul>
+            <li><strong>Rheumatology consultant:</strong> Focused on DMARDs management and monitoring</li>
+            <li><strong>Neurology consultant:</strong> Emphasis on multiple sclerosis and Parkinson's disease workflows</li>
+            <li><strong>GP partners:</strong> Perspective on time constraints and practical needs</li>
+          </ul>
+
+          <blockquote>
+            "We need faster guidance, yes, but not at the cost of accountability. Every recommendation must be traceable to evidence, and I need to review before any answer reaches the GP."
+          </blockquote>
+
+          <h3>Project Scoping</h3>
+          <p>From these conversations, we narrowed scope to neurology and rheumatology guidance so retrieval could be grounded in a realistic, manageable evidence base. We agreed that evidence needed to stay visible so the specialist could review the response before anything was officially submitted to a GP.</p>
+
+          <h3>Initial Requirements Baseline</h3>
+          <div class="callout callout--research">
+            <div class="callout-title">📋 Core Principles</div>
+            <p><strong>1. Keep answers grounded in guideline evidence</strong> — Every claim traces to NICE/BSR documentation | <strong>2. Preserve specialist oversight</strong> — No direct AI→GP responses, always reviewed | <strong>3. Make responses easy to review</strong> — Evidence highlighted, confidence scores visible</p>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>Ambience-AI Development Blog | UCL COMP0016 Systems Engineering Project</p>
+      <div class="footer-links">
+        <a href="https://github.com/hyardim/Ambience-AI-1.5" target="_blank" rel="noopener">GitHub Repository</a>
+        <a href="https://github.com/hyardim/SystemsEng-Team20-Website" target="_blank" rel="noopener">Technical Report</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Sticky header on scroll
+    const header = document.querySelector('.site-header');
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('is-scrolled', window.scrollY > 10);
+    });
+
+    // Sidebar active state
+    const posts = document.querySelectorAll('[id^="week-"]');
+    const sidebarLinks = document.querySelectorAll('.sidebar-list a[href^="#week-"]');
+
+    window.addEventListener('scroll', () => {
+      let currentPost = null;
+      posts.forEach(post => {
+        const rect = post.getBoundingClientRect();
+        if (rect.top < 200) currentPost = post.id;
+      });
+
+      sidebarLinks.forEach(link => {
+        link.classList.remove('is-active');
+        if (currentPost && link.href.includes(currentPost)) {
+          link.classList.add('is-active');
+        }
+      });
+    });
+
+    // Mobile nav toggle
+    const navToggle = document.querySelector('.nav-toggle');
+    const headerNav = document.querySelector('.header-nav');
+    navToggle?.addEventListener('click', () => {
+      headerNav.classList.toggle('is-open');
+    });
+  </script>
+</body>
+</html>

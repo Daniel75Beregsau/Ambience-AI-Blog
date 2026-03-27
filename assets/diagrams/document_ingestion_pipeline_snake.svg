@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1520" height="760" viewBox="0 0 1520 760" role="img" aria-labelledby="title desc">
+  <title id="title">Document Ingestion Pipeline</title>
+  <desc id="desc">Flow diagram of eight ingestion stages from extract through store.</desc>
+
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f5f9ff"/>
+      <stop offset="100%" stop-color="#eaf2ff"/>
+    </linearGradient>
+    <marker id="arrow" markerWidth="11" markerHeight="9" refX="10" refY="4.5" orient="auto">
+      <path d="M0,0 L11,4.5 L0,9 Z" fill="#1d4f91"/>
+    </marker>
+    <style>
+      .title { font: 700 34px Arial, sans-serif; fill: #0b356d; }
+      .connector { stroke: #1d4f91; stroke-width: 4; fill: none; marker-end: url(#arrow); }
+      .stage { rx: 18; stroke-width: 2.5; }
+      .num { font: 700 20px Arial, sans-serif; fill: #0f2f5e; text-anchor: middle; dominant-baseline: middle; }
+      .stage-title { font: 700 17px Arial, sans-serif; fill: #103a71; text-anchor: middle; }
+      .stage-text { font: 500 13px Arial, sans-serif; fill: #36557d; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="1520" height="760" fill="url(#bg)"/>
+
+  <text class="title" x="760" y="62" text-anchor="middle">Document Ingestion Pipeline</text>
+
+  <!-- Top row: left to right -->
+  <line class="connector" x1="280" y1="320" x2="440" y2="320"/>
+  <line class="connector" x1="620" y1="320" x2="780" y2="320"/>
+  <line class="connector" x1="960" y1="320" x2="1120" y2="320"/>
+  <path class="connector" d="M1300 320 L1360 320 L1360 570 L1280 570"/>
+
+  <!-- Bottom row: right to left -->
+  <line class="connector" x1="1120" y1="570" x2="960" y2="570"/>
+  <line class="connector" x1="780" y1="570" x2="620" y2="570"/>
+  <line class="connector" x1="440" y1="570" x2="280" y2="570"/>
+
+  <!-- Stage 1 -->
+  <circle cx="102" cy="225" r="28" fill="#d9e9ff" stroke="#7da4d8" stroke-width="2"/>
+  <text class="num" x="102" y="225">1</text>
+  <rect class="stage" x="100" y="250" width="180" height="140" fill="#f3f8ff" stroke="#8aa9d0"/>
+  <text class="stage-title" x="190" y="287">EXTRACT</text>
+  <text class="stage-text" x="190" y="314">Read source PDF, DOCX,</text>
+  <text class="stage-text" x="190" y="334">or TXT and preserve</text>
+  <text class="stage-text" x="190" y="354">raw page boundaries.</text>
+
+  <!-- Stage 2 -->
+  <circle cx="442" cy="225" r="28" fill="#d9e9ff" stroke="#7da4d8" stroke-width="2"/>
+  <text class="num" x="442" y="225">2</text>
+  <rect class="stage" x="440" y="250" width="180" height="140" fill="#f3f8ff" stroke="#8aa9d0"/>
+  <text class="stage-title" x="530" y="287">CLEAN</text>
+  <text class="stage-text" x="530" y="314">Normalize whitespace,</text>
+  <text class="stage-text" x="530" y="334">remove control noise,</text>
+  <text class="stage-text" x="530" y="354">keep paragraph intent.</text>
+
+  <!-- Stage 3 -->
+  <circle cx="782" cy="225" r="28" fill="#d9e9ff" stroke="#7da4d8" stroke-width="2"/>
+  <text class="num" x="782" y="225">3</text>
+  <rect class="stage" x="780" y="250" width="180" height="140" fill="#f3f8ff" stroke="#8aa9d0"/>
+  <text class="stage-title" x="870" y="287">SECTION</text>
+  <text class="stage-text" x="870" y="314">Detect heading hierarchy</text>
+  <text class="stage-text" x="870" y="334">and assign section_path</text>
+  <text class="stage-text" x="870" y="354">for grounded citations.</text>
+
+  <!-- Stage 4 -->
+  <circle cx="1122" cy="225" r="28" fill="#d9e9ff" stroke="#7da4d8" stroke-width="2"/>
+  <text class="num" x="1122" y="225">4</text>
+  <rect class="stage" x="1120" y="250" width="180" height="140" fill="#f3f8ff" stroke="#8aa9d0"/>
+  <text class="stage-title" x="1210" y="287">TABLE</text>
+  <text class="stage-text" x="1210" y="314">Identify tabular blocks</text>
+  <text class="stage-text" x="1210" y="334">and preserve them as</text>
+  <text class="stage-text" x="1210" y="354">atomic table chunks.</text>
+
+  <!-- Stage 5 -->
+  <circle cx="1122" cy="475" r="28" fill="#d9e9ff" stroke="#7da4d8" stroke-width="2"/>
+  <text class="num" x="1122" y="475">5</text>
+  <rect class="stage" x="1120" y="500" width="180" height="140" fill="#f3f8ff" stroke="#8aa9d0"/>
+  <text class="stage-title" x="1210" y="537">METADATA</text>
+  <text class="stage-text" x="1210" y="564">Attach specialty, source,</text>
+  <text class="stage-text" x="1210" y="584">dates, and derive stable</text>
+  <text class="stage-text" x="1210" y="604">document identifiers.</text>
+
+  <!-- Stage 6 -->
+  <circle cx="782" cy="475" r="28" fill="#d9e9ff" stroke="#7da4d8" stroke-width="2"/>
+  <text class="num" x="782" y="475">6</text>
+  <rect class="stage" x="780" y="500" width="180" height="140" fill="#f3f8ff" stroke="#8aa9d0"/>
+  <text class="stage-title" x="870" y="537">CHUNK</text>
+  <text class="stage-text" x="870" y="564">Split into sentence-safe,</text>
+  <text class="stage-text" x="870" y="584">retrieval-ready passages</text>
+  <text class="stage-text" x="870" y="604">with overlap policy.</text>
+
+  <!-- Stage 7 -->
+  <circle cx="442" cy="475" r="28" fill="#d9e9ff" stroke="#7da4d8" stroke-width="2"/>
+  <text class="num" x="442" y="475">7</text>
+  <rect class="stage" x="440" y="500" width="180" height="140" fill="#f3f8ff" stroke="#8aa9d0"/>
+  <text class="stage-title" x="530" y="537">EMBED</text>
+  <text class="stage-text" x="530" y="564">Compute vector embeddings</text>
+  <text class="stage-text" x="530" y="584">for semantic retrieval</text>
+  <text class="stage-text" x="530" y="604">and reranking support.</text>
+
+  <!-- Stage 8 -->
+  <circle cx="102" cy="475" r="28" fill="#d9e9ff" stroke="#7da4d8" stroke-width="2"/>
+  <text class="num" x="102" y="475">8</text>
+  <rect class="stage" x="100" y="500" width="180" height="140" fill="#f3f8ff" stroke="#8aa9d0"/>
+  <text class="stage-title" x="190" y="537">STORE</text>
+  <text class="stage-text" x="190" y="564">Upsert chunks + vectors</text>
+  <text class="stage-text" x="190" y="584">into pgvector indexes</text>
+  <text class="stage-text" x="190" y="604">for production retrieval.</text>
+
+</svg>

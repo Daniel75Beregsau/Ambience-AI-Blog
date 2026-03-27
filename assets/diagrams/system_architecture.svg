@@ -1,0 +1,141 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="700" viewBox="0 0 900 700" font-family="Arial, sans-serif">
+  <defs>
+    <!-- Arrowhead marker -->
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#005EB8"/>
+    </marker>
+    <marker id="arrow-gray" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#666"/>
+    </marker>
+    <!-- Drop shadow filter -->
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-color="#00000022"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="700" fill="#F0F4F5"/>
+
+  <!-- Title -->
+  <rect x="0" y="0" width="900" height="52" fill="#005EB8"/>
+  <text x="450" y="33" text-anchor="middle" font-size="18" font-weight="bold" fill="white">System Architecture — Docker Container Network</text>
+
+  <!-- Client Browser (outside network) -->
+  <rect x="30" y="80" width="130" height="56" rx="10" fill="white" stroke="#005EB8" stroke-width="2" filter="url(#shadow)"/>
+  <text x="95" y="102" text-anchor="middle" font-size="13" font-weight="bold" fill="#003087">Client</text>
+  <text x="95" y="120" text-anchor="middle" font-size="11" fill="#555">Browser / HTTPS</text>
+
+  <!-- Docker Network outer box -->
+  <rect x="190" y="68" width="690" height="610" rx="14" fill="#E8F0F7" stroke="#005EB8" stroke-width="2.5" stroke-dasharray="10,5"/>
+  <text x="535" y="92" text-anchor="middle" font-size="13" font-weight="bold" fill="#005EB8">ambience_net (Docker Bridge Network)</text>
+
+  <!-- Nginx -->
+  <rect x="330" y="108" width="210" height="62" rx="10" fill="white" stroke="#005EB8" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="330" y="108" width="210" height="20" rx="10" fill="#005EB8"/>
+  <rect x="330" y="118" width="210" height="10" fill="#005EB8"/>
+  <text x="435" y="123" text-anchor="middle" font-size="11" font-weight="bold" fill="white">Nginx  ·  port 80 / 443</text>
+  <text x="435" y="145" text-anchor="middle" font-size="11" fill="#003087">Reverse Proxy</text>
+  <text x="435" y="160" text-anchor="middle" font-size="10" fill="#888" font-style="italic">★ Production only</text>
+
+  <!-- Frontend -->
+  <rect x="205" y="240" width="195" height="62" rx="10" fill="white" stroke="#005EB8" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="205" y="240" width="195" height="20" rx="10" fill="#005EB8"/>
+  <rect x="205" y="250" width="195" height="10" fill="#005EB8"/>
+  <text x="302" y="255" text-anchor="middle" font-size="11" font-weight="bold" fill="white">Frontend  ·  port 3000 / 5173</text>
+  <text x="302" y="277" text-anchor="middle" font-size="11" fill="#003087">React / TypeScript</text>
+  <text x="302" y="292" text-anchor="middle" font-size="10" fill="#555">Vite dev / Nginx prod</text>
+
+  <!-- Backend -->
+  <rect x="455" y="240" width="195" height="62" rx="10" fill="white" stroke="#005EB8" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="455" y="240" width="195" height="20" rx="10" fill="#005EB8"/>
+  <rect x="455" y="250" width="195" height="10" fill="#005EB8"/>
+  <text x="552" y="255" text-anchor="middle" font-size="11" font-weight="bold" fill="white">Backend  ·  port 8000</text>
+  <text x="552" y="277" text-anchor="middle" font-size="11" fill="#003087">FastAPI / Python</text>
+  <text x="552" y="292" text-anchor="middle" font-size="10" fill="#555">REST API + SSE streaming</text>
+
+  <!-- RAG Service -->
+  <rect x="340" y="390" width="185" height="62" rx="10" fill="white" stroke="#005EB8" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="340" y="390" width="185" height="20" rx="10" fill="#005EB8"/>
+  <rect x="340" y="400" width="185" height="10" fill="#005EB8"/>
+  <text x="432" y="405" text-anchor="middle" font-size="11" font-weight="bold" fill="white">RAG Service  ·  port 8001</text>
+  <text x="432" y="427" text-anchor="middle" font-size="11" fill="#003087">FastAPI / Python</text>
+  <text x="432" y="442" text-anchor="middle" font-size="10" fill="#555">Embeddings + Med42 LLM</text>
+
+  <!-- RAG Worker -->
+  <rect x="555" y="390" width="175" height="62" rx="10" fill="white" stroke="#005EB8" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="555" y="390" width="175" height="20" rx="10" fill="#005EB8"/>
+  <rect x="555" y="400" width="175" height="10" fill="#005EB8"/>
+  <text x="642" y="405" text-anchor="middle" font-size="11" font-weight="bold" fill="white">RAG Worker</text>
+  <text x="642" y="427" text-anchor="middle" font-size="11" fill="#003087">Background Retry Worker</text>
+  <text x="642" y="442" text-anchor="middle" font-size="10" fill="#555">Processes failed RAG jobs</text>
+
+  <!-- PostgreSQL -->
+  <rect x="210" y="520" width="185" height="62" rx="10" fill="white" stroke="#336791" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="210" y="520" width="185" height="20" rx="10" fill="#336791"/>
+  <rect x="210" y="530" width="185" height="10" fill="#336791"/>
+  <text x="302" y="535" text-anchor="middle" font-size="11" font-weight="bold" fill="white">PostgreSQL  ·  port 5432</text>
+  <text x="302" y="557" text-anchor="middle" font-size="11" fill="#003087">Relational DB + pgvector</text>
+  <text x="302" y="572" text-anchor="middle" font-size="10" fill="#555">Persistent data store</text>
+
+  <!-- Redis -->
+  <rect x="420" y="520" width="155" height="62" rx="10" fill="white" stroke="#CC0000" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="420" y="520" width="155" height="20" rx="10" fill="#CC0000"/>
+  <rect x="420" y="530" width="155" height="10" fill="#CC0000"/>
+  <text x="497" y="535" text-anchor="middle" font-size="11" font-weight="bold" fill="white">Redis  ·  port 6379</text>
+  <text x="497" y="557" text-anchor="middle" font-size="11" fill="#003087">Cache / Job Queue</text>
+  <text x="497" y="572" text-anchor="middle" font-size="10" fill="#555">RAG task queue</text>
+
+  <!-- Mailpit -->
+  <rect x="600" y="520" width="165" height="62" rx="10" fill="white" stroke="#E07B00" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="600" y="520" width="165" height="20" rx="10" fill="#E07B00"/>
+  <rect x="600" y="530" width="165" height="10" fill="#E07B00"/>
+  <text x="682" y="535" text-anchor="middle" font-size="11" font-weight="bold" fill="white">Mailpit  ·  1025 / 8025</text>
+  <text x="682" y="557" text-anchor="middle" font-size="11" fill="#003087">SMTP Dev Server</text>
+  <text x="682" y="572" text-anchor="middle" font-size="10" fill="#555">Email verification / reset</text>
+
+  <!-- ===== ARROWS ===== -->
+
+  <!-- Client → Nginx -->
+  <line x1="160" y1="108" x2="328" y2="138" stroke="#005EB8" stroke-width="1.8" marker-end="url(#arrow)"/>
+  <text x="235" y="117" text-anchor="middle" font-size="9" fill="#005EB8">HTTPS</text>
+
+  <!-- Nginx → Frontend -->
+  <line x1="400" y1="170" x2="340" y2="240" stroke="#005EB8" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Nginx → Backend -->
+  <line x1="470" y1="170" x2="520" y2="240" stroke="#005EB8" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Frontend → Backend (API calls) -->
+  <line x1="400" y1="271" x2="453" y2="271" stroke="#005EB8" stroke-width="1.5" marker-end="url(#arrow)" stroke-dasharray="5,3"/>
+  <text x="426" y="265" text-anchor="middle" font-size="9" fill="#005EB8">API / SSE</text>
+
+  <!-- Backend → RAG Service -->
+  <line x1="530" y1="302" x2="470" y2="390" stroke="#005EB8" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="488" y="345" text-anchor="middle" font-size="9" fill="#005EB8">/answer · /revise · /ingest</text>
+
+  <!-- Backend → PostgreSQL: routes LEFT of RAG Service to avoid passing through it -->
+  <path d="M 455 302 L 455 350 L 300 350 L 300 520" fill="none" stroke="#336791" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Backend → Redis: routes through the 30px gap between RAG Service (right=525) and RAG Worker (left=555) -->
+  <path d="M 535 302 L 535 520" fill="none" stroke="#CC0000" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Backend → Mailpit: routes RIGHT of RAG Worker (right=730) to avoid passing through it -->
+  <path d="M 648 302 L 745 302 L 745 520" fill="none" stroke="#E07B00" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- RAG Service → PostgreSQL -->
+  <line x1="380" y1="452" x2="320" y2="520" stroke="#336791" stroke-width="1.5" marker-end="url(#arrow)" stroke-dasharray="4,3"/>
+
+  <!-- RAG Worker → Redis -->
+  <line x1="600" y1="452" x2="560" y2="520" stroke="#CC0000" stroke-width="1.5" marker-end="url(#arrow)" stroke-dasharray="4,3"/>
+
+  <!-- Legend -->
+  <rect x="210" y="618" width="640" height="52" rx="8" fill="white" stroke="#ccc" stroke-width="1"/>
+  <text x="230" y="636" font-size="11" font-weight="bold" fill="#003087">Legend:</text>
+  <line x1="290" y1="632" x2="320" y2="632" stroke="#005EB8" stroke-width="1.8" marker-end="url(#arrow)"/>
+  <text x="325" y="636" font-size="10" fill="#555">Direct HTTP call</text>
+  <line x1="430" y1="632" x2="460" y2="632" stroke="#005EB8" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrow)"/>
+  <text x="465" y="636" font-size="10" fill="#555">API / SSE stream</text>
+  <line x1="580" y1="632" x2="610" y2="632" stroke="#336791" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="615" y="636" font-size="10" fill="#555">DB connection</text>
+  <text x="230" y="656" font-size="10" fill="#888" font-style="italic">★ Nginx only active in production; Vite dev server used in development mode.</text>
+</svg>

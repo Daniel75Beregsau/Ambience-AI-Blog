@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="520" viewBox="0 0 960 520">
+  <style>
+    .box { fill: #ffffff; stroke: #1f3b73; stroke-width: 2; }
+    .title { font: 700 18px Arial, Helvetica, sans-serif; fill: #0f172a; }
+    .field { font: 14px Arial, Helvetica, sans-serif; fill: #334155; }
+    .line { stroke: #1f3b73; stroke-width: 2; }
+    .label { font: 12px Arial, Helvetica, sans-serif; fill: #475569; }
+  </style>
+
+  <rect class="box" x="60" y="50" width="220" height="130" rx="12" ry="12" />
+  <text class="title" x="80" y="80">User</text>
+  <text class="field" x="80" y="105">id</text>
+  <text class="field" x="80" y="125">email</text>
+  <text class="field" x="80" y="145">role</text>
+
+  <rect class="box" x="370" y="40" width="240" height="150" rx="12" ry="12" />
+  <text class="title" x="390" y="70">Chat</text>
+  <text class="field" x="390" y="95">id</text>
+  <text class="field" x="390" y="115">status</text>
+  <text class="field" x="390" y="135">specialty</text>
+  <text class="field" x="390" y="155">patient_context</text>
+
+  <rect class="box" x="690" y="50" width="220" height="130" rx="12" ry="12" />
+  <text class="title" x="710" y="80">Message</text>
+  <text class="field" x="710" y="105">id</text>
+  <text class="field" x="710" y="125">sender</text>
+  <text class="field" x="710" y="145">content</text>
+
+  <rect class="box" x="370" y="240" width="240" height="120" rx="12" ry="12" />
+  <text class="title" x="390" y="270">FileAttachment</text>
+  <text class="field" x="390" y="295">id</text>
+  <text class="field" x="390" y="315">filename</text>
+  <text class="field" x="390" y="335">mime_type</text>
+
+  <rect class="box" x="60" y="240" width="220" height="120" rx="12" ry="12" />
+  <text class="title" x="80" y="270">Notification</text>
+  <text class="field" x="80" y="295">id</text>
+  <text class="field" x="80" y="315">type</text>
+  <text class="field" x="80" y="335">is_read</text>
+
+  <rect class="box" x="60" y="400" width="220" height="90" rx="12" ry="12" />
+  <text class="title" x="80" y="430">AuditLog</text>
+  <text class="field" x="80" y="455">id</text>
+  <text class="field" x="80" y="475">action</text>
+
+  <line class="line" x1="280" y1="115" x2="370" y2="115" />
+  <text class="label" x="305" y="100">1..*</text>
+
+  <line class="line" x1="610" y1="115" x2="690" y2="115" />
+  <text class="label" x="635" y="100">1..*</text>
+
+  <line class="line" x1="490" y1="190" x2="490" y2="240" />
+  <text class="label" x="500" y="220">1..*</text>
+
+  <line class="line" x1="170" y1="180" x2="170" y2="240" />
+  <text class="label" x="178" y="210">1..*</text>
+
+  <line class="line" x1="140" y1="180" x2="140" y2="400" />
+  <text class="label" x="148" y="310">1..*</text>
+</svg>
