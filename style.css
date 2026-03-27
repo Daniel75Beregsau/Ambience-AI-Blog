@@ -119,10 +119,14 @@ p { margin: 0 0 1em; }
   display: flex; gap: 20px; margin-top: 32px; align-items: center;
 }
 .hero-partners img {
-  height: 30px; opacity: .6; filter: brightness(0) invert(1);
+  height: 36px; opacity: .85;
   transition: opacity var(--transition);
 }
-.hero-partners img:hover { opacity: .9; }
+.hero-partners img:hover { opacity: 1; }
+.hero-partners img[alt="UCL"],
+.hero-partners img[alt="Intel"] {
+  filter: brightness(0) invert(1);
+}
 .hero-screenshots {
   display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
   transform: perspective(1200px) rotateY(-4deg) rotateX(2deg);
@@ -134,6 +138,78 @@ p { margin: 0 0 1em; }
 }
 .hero-screenshots img:hover { transform: translateY(-4px); }
 .hero-screenshots img:nth-child(2) { margin-top: 24px; }
+
+/* ── Gantt Chart ──────────────────────────────────────── */
+.gantt-section {
+  background: var(--surface); border-bottom: 1px solid var(--border);
+  padding: 48px var(--page-gutter);
+}
+.gantt-section-inner {
+  max-width: 1200px; margin: 0 auto;
+}
+.gantt-section h2 {
+  font-size: 1.4rem; font-weight: 800; color: var(--navy); margin-bottom: 4px;
+}
+.gantt-section > p, .gantt-section-inner > p {
+  color: var(--text-secondary); font-size: .92rem; margin-bottom: 20px;
+}
+.gantt-chart {
+  border: 1px solid var(--border); border-radius: var(--radius);
+  background: var(--surface); padding: 20px; overflow-x: auto;
+}
+.gantt-chart__axis,
+.gantt-chart__row {
+  display: grid; grid-template-columns: 260px minmax(480px, 1fr);
+  gap: 14px; align-items: center;
+}
+.gantt-chart__axis { margin-bottom: 10px; }
+.gantt-chart__axis-label {
+  font-size: .82rem; font-weight: 700; color: var(--navy);
+  text-transform: uppercase; letter-spacing: .04em;
+}
+.gantt-chart__months {
+  display: grid; grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 0; padding-bottom: 6px; border-bottom: 1px solid var(--border);
+}
+.gantt-chart__months span {
+  font-size: .8rem; font-weight: 700; color: var(--navy-light); text-align: center;
+}
+.gantt-chart__track {
+  position: relative; height: 34px; border-radius: 10px;
+  background:
+    repeating-linear-gradient(90deg, rgba(17,24,39,.05) 0, rgba(17,24,39,.05) 1px, transparent 1px, transparent calc(100% / 24)),
+    linear-gradient(180deg, #f0f7ff, #e8f1ff);
+  border: 1px solid var(--border); overflow: hidden;
+}
+.gantt-chart__track::before {
+  content: ""; position: absolute; inset: 0;
+  background: repeating-linear-gradient(90deg,
+    transparent 0, transparent calc(100% / 6 - 1px),
+    rgba(14,165,233,.15) calc(100% / 6 - 1px), rgba(14,165,233,.15) calc(100% / 6));
+  pointer-events: none;
+}
+.gantt-chart__label {
+  font-size: .9rem; font-weight: 600; color: var(--navy);
+}
+.gantt-chart__bar {
+  position: absolute; top: 6px;
+  left: calc((var(--start) / 24) * 100%);
+  width: calc((var(--span) / 24) * 100%);
+  height: 22px; display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 999px; font-size: .75rem; font-weight: 700; color: #fff;
+  background: linear-gradient(90deg, #0284c7, #0ea5e9);
+  box-shadow: 0 4px 12px rgba(14,165,233,.3);
+  white-space: nowrap; z-index: 1;
+}
+.gantt-chart__note {
+  margin: 14px 0 0; font-size: .82rem; color: var(--text-muted);
+}
+@media (max-width: 700px) {
+  .gantt-chart__axis, .gantt-chart__row {
+    grid-template-columns: 160px minmax(320px, 1fr);
+  }
+  .gantt-chart__label { font-size: .8rem; }
+}
 
 /* ── Content layout ───────────────────────────────────── */
 .page-content {
