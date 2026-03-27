@@ -55,12 +55,12 @@
         <li><a href="#week-23-24"><span class="week-label">Weeks 23–24</span><span class="week-meta">Testing wave 3 and handover readiness</span></a></li>
         <li><a href="#week-21-22"><span class="week-label">Weeks 21–22</span><span class="week-meta">Performance and reliability testing</span></a></li>
         <li><a href="#week-19-20"><span class="week-label">Weeks 19–20</span><span class="week-meta">Functional and integration testing</span></a></li>
-        <li><a href="#week-17-18"><span class="week-label">Weeks 17–18</span><span class="week-meta">Routing and cloud fallback</span></a></li>
-        <li><a href="#week-15-16"><span class="week-label">Weeks 15–16</span><span class="week-meta">Local Med42 and RunPod</span></a></li>
-        <li><a href="#week-13-14"><span class="week-label">Weeks 13–14</span><span class="week-meta">Intel server loss and pivot</span></a></li>
-        <li><a href="#week-11-12"><span class="week-label">Weeks 11–12</span><span class="week-meta">Merging GP flow and chatbot</span></a></li>
+        <li><a href="#week-17-18"><span class="week-label">Weeks 17–18</span><span class="week-meta">RAG integration and cloud routing</span></a></li>
+        <li><a href="#week-15-16"><span class="week-label">Weeks 15–16</span><span class="week-meta">Server loss and cloud pivot</span></a></li>
+        <li><a href="#week-13-14"><span class="week-label">Weeks 13–14</span><span class="week-meta">End-to-end integration complete</span></a></li>
+        <li><a href="#week-11-12"><span class="week-label">Weeks 11–12</span><span class="week-meta">Working GP portal and backend API</span></a></li>
         <div class="sidebar-year">2025</div>
-        <li><a href="#week-9-10"><span class="week-label">Weeks 9–10</span><span class="week-meta">RAG implementation begins</span></a></li>
+        <li><a href="#week-9-10"><span class="week-label">Weeks 9–10</span><span class="week-meta">Frontend and backend scaffolding</span></a></li>
         <li><a href="#week-7-8"><span class="week-label">Weeks 7–8</span><span class="week-meta">Gaudi 2 stabilisation</span></a></li>
         <li><a href="#week-5-6"><span class="week-label">Weeks 5–6</span><span class="week-meta">Gaudi 2 setup and Med42 70B</span></a></li>
         <li><a href="#week-3-4"><span class="week-label">Weeks 3–4</span><span class="week-meta">Requirements baseline</span></a></li>
@@ -237,14 +237,23 @@
         <div class="post-header">
           <div class="post-week-badge">Weeks 17–18</div>
           <div class="post-header-text">
-            <h2 class="post-title">Local-First Routing and Cloud Fallback</h2>
+            <h2 class="post-title">RAG Integration and Cloud Routing</h2>
           </div>
         </div>
         <div class="post-body">
-          <p>This period focused on turning the routing idea into a usable implementation. We integrated the local Med42 8B path as the default and established a cloud fallback route for harder queries, while keeping the API provider-agnostic.</p>
+          <p>With the frontend and backend already stable and the infrastructure pivot resolved, this period was about connecting the RAG service to the rest of the system and finalising the routing strategy between local and cloud models. This was the heart of the February push — turning three separate services into one working product.</p>
+
+          <h3>RAG Service Connected to Backend</h3>
+          <p>The RAG service was now fully integrated with the main backend. When a GP submits a clinical question, the backend forwards it to the RAG service, which retrieves relevant guideline evidence, generates a grounded response, and streams it back through the consultation interface.</p>
+          <ul>
+            <li><strong>Document ingestion:</strong> Complete pipeline from PDF upload to indexed vector chunks</li>
+            <li><strong>Retrieval:</strong> Hybrid vector similarity + keyword search with BM25 re-ranking</li>
+            <li><strong>Generation:</strong> Med42 generates responses grounded in retrieved evidence</li>
+            <li><strong>Citation mapping:</strong> Exact substring matching traces claims back to source guidelines</li>
+          </ul>
 
           <h3>Routing Strategy Implementation</h3>
-          <p>The router makes intelligent decisions based on query complexity and available resources:</p>
+          <p>The router directs queries to local or cloud models based on available resources:</p>
 
           <div class="code-block">
             <div class="code-block-header">
@@ -253,34 +262,29 @@
               <span class="dot dot--green"></span>
               rag_service/src/generation/router.py
             </div>
-            <pre><span class="kw">class</span> <span class="type">IntelligentRouter</span>:
-    <span class="kw">async def</span> <span class="fn">select_model</span>(<span class="kw">self</span>, query: str, context: str) -> str:
-        <span class="cm"># Complexity scoring</span>
-        complexity = <span class="kw">await</span> <span class="fn">score_query_complexity</span>(query)
+            <pre><span class="kw">class</span> <span class="type">ModelRouter</span>:
+    <span class="kw">async def</span> <span class="fn">select_provider</span>(<span class="kw">self</span>, query: str) -> str:
+        <span class="cm"># Check if local Ollama model is available</span>
+        local_available = <span class="kw">await</span> <span class="fn">check_ollama_health</span>()
 
-        <span class="cm"># Check local resource availability</span>
-        local_available = <span class="kw">await</span> <span class="fn">check_local_capacity</span>()
-
-        <span class="kw">if</span> complexity < <span class="num">0.6</span> <span class="op">and</span> local_available:
-            <span class="kw">return</span> <span class="str">"local_8b"</span>
-        <span class="kw">elif</span> complexity < <span class="num">0.8</span> <span class="op">and</span> local_available:
-            <span class="kw">return</span> <span class="str">"local_8b"</span>  <span class="cm"># Try local first</span>
+        <span class="kw">if</span> local_available:
+            <span class="kw">return</span> <span class="str">"local"</span>   <span class="cm"># Default: local Med42 8B</span>
         <span class="kw">else</span>:
-            <span class="kw">return</span> <span class="str">"cloud_70b"</span>  <span class="cm"># Use 70B for complex cases</span></pre>
+            <span class="kw">return</span> <span class="str">"cloud"</span>   <span class="cm"># Fallback: RunPod 70B</span></pre>
           </div>
 
-          <h3>Retrieval Quality Improvements</h3>
-          <p>In parallel, we continued improving retrieval quality and citation mapping so the specialist review remained grounded in evidence.</p>
+          <h3>Retrieval Quality Tuning</h3>
+          <p>With the full pipeline running end-to-end for the first time, we could now measure and improve retrieval quality against real queries:</p>
           <ul>
             <li><strong>Hybrid search:</strong> Combined vector similarity (0.7 weight) + keyword overlap (0.3 weight)</li>
-            <li><strong>Re-ranking:</strong> Used BM25 to re-rank top-20 results from vector search</li>
-            <li><strong>Citation precision:</strong> Exact substring matching from original documents</li>
-            <li><strong>Confidence scoring:</strong> Based on retrieval similarity and answer entropy</li>
+            <li><strong>Re-ranking:</strong> BM25 re-ranking on top-20 results from vector search</li>
+            <li><strong>Citation precision:</strong> Exact substring matching from original guideline documents</li>
+            <li><strong>Confidence scoring:</strong> Based on retrieval similarity and answer grounding quality</li>
           </ul>
 
           <h3>Specialist Review UI for Evidence</h3>
           <img src="assets/demo/ui-review.png" alt="Specialist review interface showing citations" class="post-img" />
-          <p class="post-img-caption">The specialist review interface surfaces retrieved evidence and model confidence to support informed decisions</p>
+          <p class="post-img-caption">The specialist review interface now surfaces retrieved evidence and model confidence to support informed review decisions</p>
         </div>
       </article>
 
@@ -289,27 +293,28 @@
         <div class="post-header">
           <div class="post-week-badge">Weeks 15–16</div>
           <div class="post-header-text">
-            <h2 class="post-title">Local Med42 8B and RunPod Deployment</h2>
+            <h2 class="post-title">Intel Server Loss and Cloud Pivot</h2>
           </div>
         </div>
         <div class="post-body">
-          <p>After extensive experimentation with local models, we settled on Med42 8B—a lightweight, quantized version that runs efficiently on standard laptops while maintaining medical knowledge.</p>
+          <p>Intel informed us that the Gaudi 2 server would need to be reclaimed as the contract was expiring. This forced a critical architectural decision: we could no longer run the Med42 70B parameter model on dedicated hardware, and we needed to find a sustainable alternative quickly — while the frontend and backend remained stable and working.</p>
 
-          <h3>Model Selection and Optimization</h3>
+          <h3>The Challenge</h3>
+          <blockquote>
+            "We had built our model inference strategy around a powerful on-premise server, but we needed to pivot to something sustainable. The 70B model was too demanding for laptops, and unlimited cloud compute costs would not be viable for this project."
+          </blockquote>
+
+          <h3>Evaluating Alternatives</h3>
+          <p>We rapidly evaluated our options and converged on a hybrid approach:</p>
           <ul>
-            <li><strong>Model:</strong> thewindmom/llama3-med42-8b</li>
-            <li><strong>Quantization:</strong> 8-bit (from original 16-bit FP)</li>
-            <li><strong>Hardware:</strong> Standard MacBook Pro (16GB RAM)</li>
-            <li><strong>Average response time:</strong> 6-8 seconds per query</li>
-            <li><strong>Token throughput:</strong> ~25 tokens/second</li>
+            <li><strong>Med42 8B (quantized):</strong> Lightweight enough to run locally via Ollama on standard hardware — discovered it ran well even on a MacBook Pro</li>
+            <li><strong>Cloud endpoints:</strong> RunPod offered pay-per-use GPU pods for the full 70B model when needed</li>
+            <li><strong>Hybrid routing:</strong> Use 8B locally as the default, route to cloud 70B only for complex queries or when local resources are unavailable</li>
           </ul>
 
-          <h3>Cloud Deployment with RunPod</h3>
-          <p>For cloud deployment, we chose RunPod due to its low cost and ability to avoid charges when the model is not actively running. However, the system was designed with a provider-agnostic endpoint, making it easy to switch between compatible cloud solutions.</p>
-
           <div class="callout callout--reference">
-            <div class="callout-title">💾 Model Configuration</div>
-            <p><strong>Local:</strong> ollama/ollama with thewindmom/llama3-med42-8b:8bit quantization | <strong>Cloud:</strong> RunPod Pod with Med42 70B (unquantized) for demanding queries</p>
+            <div class="callout-title">💾 New Model Configuration</div>
+            <p><strong>Local:</strong> Ollama with thewindmom/llama3-med42-8b (Q8_0 quantization, ~8 GB) | <strong>Cloud:</strong> RunPod pod with Med42 70B for demanding cases | <strong>Hardware:</strong> Standard MacBook Pro (16 GB RAM) sufficient for local path</p>
           </div>
 
           <div class="code-block">
@@ -333,6 +338,15 @@
     }
 }</pre>
           </div>
+
+          <h3>Architecture Diagram: New Routing Pipeline</h3>
+          <div class="post-diagram">
+            <img src="assets/diagrams/system_architecture.svg" alt="System architecture with local and cloud routing" />
+            <p class="post-diagram-caption">Updated system architecture showing local-first routing with cloud fallback after the Gaudi 2 server was reclaimed</p>
+          </div>
+
+          <h3>RAG Service Acceleration</h3>
+          <p>With the infrastructure pivot resolved and a clear model strategy, we accelerated the RAG service build-out. The ingestion pipeline was complete and we began wiring up the generation endpoint that the backend would call to produce grounded responses.</p>
         </div>
       </article>
 
@@ -341,40 +355,60 @@
         <div class="post-header">
           <div class="post-week-badge">Weeks 13–14</div>
           <div class="post-header-text">
-            <h2 class="post-title">Intel Server Loss and Architecture Pivot</h2>
+            <h2 class="post-title">End-to-End Integration and Working Prototype</h2>
           </div>
         </div>
         <div class="post-body">
-          <p>Intel informed us that the Gaudi 2 server would need to be reclaimed as the contract was expiring. This forced a critical architectural decision: we couldn't run the Med42 70B parameter model locally, and other cloud solutions were prohibitively expensive.</p>
+          <p>This was the period where the frontend and backend came together into a genuinely usable product. A GP could log in, create a consultation, submit a clinical question, and follow it through the specialist review cycle. The system was working end-to-end as an application — the AI generation piece was the remaining gap.</p>
 
-          <h3>The Challenge</h3>
-          <blockquote>
-            "We had built the system around a powerful on-premise server, but we needed to pivot to something sustainable. The 70B model was too demanding for laptops, and cloud costs would be unsustainable at production scale."
-          </blockquote>
-
-          <h3>The Solution: Intelligent Routing</h3>
-          <p>Instead of choosing one path, we implemented a hybrid approach:</p>
+          <h3>Integration Milestones</h3>
           <ul>
-            <li><strong>Default:</strong> Run lightweight Med42 8B locally for ~80% of queries</li>
-            <li><strong>Fallback:</strong> Route complex queries to cloud-hosted 70B model</li>
-            <li><strong>Intelligence:</strong> Router learns which queries benefit from which model</li>
-            <li><strong>Cost efficiency:</strong> Only pay for cloud compute when needed</li>
+            <li><strong>Full authentication flow:</strong> Registration, email verification, login, and password reset all working</li>
+            <li><strong>Consultation lifecycle:</strong> Open → submitted → assigned → reviewing → approved/rejected flow complete</li>
+            <li><strong>Real-time streaming:</strong> SSE-based message streaming from backend to frontend with polling fallback</li>
+            <li><strong>Specialist review actions:</strong> All review actions (approve, reject, request changes, edit, manual response) wired up</li>
+            <li><strong>Admin oversight:</strong> User management, chat inspection, and audit log viewing functional</li>
           </ul>
 
-          <h3>Architecture Diagram: New Routing Pipeline</h3>
-          <div class="post-diagram">
-            <img src="assets/diagrams/system_architecture.svg" alt="System architecture with local and cloud routing" />
-            <p class="post-diagram-caption">Updated system architecture showing local-first routing with cloud fallback</p>
+          <h3>Frontend Polish</h3>
+          <p>With the core flow working, we spent time on usability improvements that made the product feel more complete:</p>
+          <ul>
+            <li>Responsive layout adjustments for different screen sizes</li>
+            <li>Better form validation and error messaging across GP and specialist views</li>
+            <li>Loading states and optimistic UI updates for smoother interactions</li>
+            <li>Navigation improvements and breadcrumb trails for consultation history</li>
+          </ul>
+
+          <h3>Backend Hardening</h3>
+          <p>The backend was hardened with input validation, proper error handling, and Alembic migrations for safe schema evolution:</p>
+
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="dot dot--red"></span>
+              <span class="dot dot--yellow"></span>
+              <span class="dot dot--green"></span>
+              backend/src/middleware/auth.py
+            </div>
+            <pre><span class="kw">async def</span> <span class="fn">require_role</span>(role: str):
+    <span class="kw">def</span> <span class="fn">dependency</span>(
+        token: str = Depends(oauth2_scheme),
+        db: AsyncSession = Depends(get_db),
+    ):
+        payload = decode_jwt(token)
+        user = <span class="kw">await</span> get_user_by_id(db, payload[<span class="str">"sub"</span>])
+        <span class="kw">if</span> user.role != role:
+            <span class="kw">raise</span> HTTPException(<span class="num">403</span>, <span class="str">"Insufficient permissions"</span>)
+        <span class="kw">return</span> user
+    <span class="kw">return</span> dependency</pre>
           </div>
 
-          <h3>RAG Pipeline Status</h3>
-          <p>The RAG pipeline was now fully operational and ready for optimization:</p>
-          <ul>
-            <li>✅ Document ingestion and chunking working reliably</li>
-            <li>✅ Vector embeddings generated and indexed</li>
-            <li>✅ Retrieval pipeline handling queries</li>
-            <li>🔄 Generation and re-ranking in optimization phase</li>
-          </ul>
+          <h3>RAG Pipeline Progress</h3>
+          <p>The RAG service continued progressing as a separate workstream. Document ingestion and chunking were working, and we had started generating embeddings. The full generation pipeline was not yet connected to the main application — that integration would come next.</p>
+
+          <div class="callout callout--info">
+            <div class="callout-title">📊 End-of-January Status</div>
+            <p><strong>Frontend:</strong> Functional GP portal, specialist queue, admin dashboard | <strong>Backend:</strong> All core APIs operational with auth, CRUD, notifications | <strong>RAG:</strong> Ingestion pipeline working, generation not yet integrated | <strong>Next:</strong> Connect RAG to backend and address upcoming infrastructure changes</p>
+          </div>
         </div>
       </article>
 
@@ -383,13 +417,24 @@
         <div class="post-header">
           <div class="post-week-badge">Weeks 11–12</div>
           <div class="post-header-text">
-            <h2 class="post-title">Merging GP Flow and Chatbot</h2>
+            <h2 class="post-title">Working GP Portal and Backend API</h2>
           </div>
         </div>
         <div class="post-body">
-          <p>Requirement refinement with our clients and prototype review led to a major product decision: we merged the initially planned separate GP query system and chatbot into one unified interface where generation, review, and chat history stay connected.</p>
+          <p>By this point we had a working frontend connected to a real backend. GPs could log in, create consultations, and send messages. The specialist queue was taking shape. Most of our effort went into making the frontend usable and the backend reliable.</p>
+
+          <h3>Frontend Development: GP and Specialist Views</h3>
+          <p>We built out the core user-facing interfaces that would drive the product:</p>
+          <ul>
+            <li><strong>GP consultation creation:</strong> Form with title, specialty, urgency, patient age/sex, and clinical question fields</li>
+            <li><strong>Consultation detail view:</strong> Message timeline with SSE-based streaming for real-time updates</li>
+            <li><strong>Specialist queue:</strong> Filterable list of submitted consultations sorted by urgency</li>
+            <li><strong>Specialist review interface:</strong> Actions for approve, request changes, edit response, and manual response</li>
+            <li><strong>Admin dashboard:</strong> Early version with user list and consultation overview</li>
+          </ul>
 
           <h3>Design Evolution</h3>
+          <p>Requirement refinement with our clients and prototype review led to a major product decision: we merged the initially planned separate GP query system and chatbot into one unified interface where generation, review, and chat history stay connected.</p>
           <div class="post-img-grid post-img-grid--2">
             <div>
               <img src="assets/ui-design/sketch-1.png" alt="Initial sketch of separate systems" />
@@ -401,26 +446,44 @@
             </div>
           </div>
 
-          <h3>Why This Matters</h3>
-          <p>This was an important simplification for both the team and end users. We removed the split system from the frontend and improved traceability so review decisions were easier to follow and audit.</p>
+          <h3>Backend API Development</h3>
+          <p>The backend matured significantly during this period with all core endpoints operational:</p>
           <ul>
-            <li><strong>Simpler mental model:</strong> GPs don't switch between two interfaces</li>
-            <li><strong>Better traceability:</strong> Full history of query evolution and specialist feedback</li>
-            <li><strong>Easier auditing:</strong> Complete consultation audit trail in one place</li>
-            <li><strong>Reduced code complexity:</strong> One workflow instead of two parallel flows</li>
+            <li><strong>Authentication:</strong> JWT-based auth with role enforcement (GP, specialist, admin)</li>
+            <li><strong>Consultation CRUD:</strong> Full lifecycle management with status transitions</li>
+            <li><strong>Message handling:</strong> Create, retrieve, and stream messages with SSE support</li>
+            <li><strong>File uploads:</strong> Secure file attachment with size and extension validation</li>
+            <li><strong>Notification system:</strong> Event-driven notifications for status changes and review outcomes</li>
           </ul>
 
-          <h3>Frontend Improvements</h3>
-          <p>We refined the UI design based on specialist feedback:</p>
-          <ul>
-            <li>Clearer evidence display in specialist review mode</li>
-            <li>Better highlighting of generated vs. human-written content</li>
-            <li>Improved form layout for GP query submission</li>
-            <li>Enhanced chat history navigation</li>
-          </ul>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="dot dot--red"></span>
+              <span class="dot dot--yellow"></span>
+              <span class="dot dot--green"></span>
+              backend/src/api/routes/consultations.py
+            </div>
+            <pre><span class="kw">@router.post</span>(<span class="str">"/consultations"</span>, response_model=ConsultationOut)
+<span class="kw">async def</span> <span class="fn">create_consultation</span>(
+    data: ConsultationCreate,
+    current_user: User = Depends(require_role(<span class="str">"gp"</span>)),
+    db: AsyncSession = Depends(get_db),
+):
+    consultation = Consultation(
+        title=data.title,
+        specialty=data.specialty,
+        urgency=data.urgency,
+        patient_age=data.patient_age,
+        patient_sex=data.patient_sex,
+        gp_id=current_user.id,
+    )
+    db.add(consultation)
+    <span class="kw">await</span> db.commit()
+    <span class="kw">return</span> consultation</pre>
+          </div>
 
-          <h3>Backend Workflow Changes</h3>
-          <p>Work continued steadily on the backend RAG system, with ingestion and chunking complete and the specialist review logic significantly improved.</p>
+          <h3>State of the Project</h3>
+          <p>By the end of this period, we had a working multi-role application — not yet connected to AI generation, but functional for the consultation workflow. The RAG pipeline work was still in early stages with chunking experiments running separately from the main application.</p>
         </div>
       </article>
 
@@ -429,60 +492,58 @@
         <div class="post-header">
           <div class="post-week-badge">Weeks 9–10</div>
           <div class="post-header-text">
-            <h2 class="post-title">RAG Implementation Begins</h2>
+            <h2 class="post-title">Frontend Scaffolding and Backend API Foundations</h2>
           </div>
         </div>
         <div class="post-body">
-          <p>We began working on the actual software after finishing planning. The most important part of our system for answer generation is the RAG pipeline, so we focused on that first.</p>
+          <p>With requirements and research complete, we started building the actual application. The priority was getting a functional frontend and backend up and running so we could iterate on the user experience while the RAG pipeline was still being explored separately.</p>
 
-          <h3>Document Ingestion Pipeline</h3>
-          <p>We started with the ingestion phase, which splits guideline documents into chunks to be referenced later. We tried different strategies and settled on a hybrid approach:</p>
+          <h3>React Frontend Setup</h3>
+          <p>We initialised the frontend as a React + TypeScript application using Vite for fast development builds. The early focus was on layout structure and routing rather than polish:</p>
+          <ul>
+            <li><strong>Project structure:</strong> Established component hierarchy for GP portal, specialist queue, and admin dashboard</li>
+            <li><strong>Routing:</strong> Set up react-router-dom with role-based route guards for GP, specialist, and admin paths</li>
+            <li><strong>State management:</strong> Built authentication context and consultation state management</li>
+            <li><strong>Component library:</strong> Created reusable form inputs, card layouts, and navigation components</li>
+          </ul>
+
+          <h3>FastAPI Backend Bootstrap</h3>
+          <p>The backend was structured as a FastAPI service with SQLAlchemy models and Pydantic validation from the start. We set up the project to support the three-role workflow agreed on with our clients:</p>
 
           <div class="code-block">
             <div class="code-block-header">
               <span class="dot dot--red"></span>
               <span class="dot dot--yellow"></span>
               <span class="dot dot--green"></span>
-              rag_service/src/ingestion/chunking.py
+              backend/src/models/consultation.py
             </div>
-            <pre><span class="kw">def</span> <span class="fn">chunk_document</span>(text: str) -> List[str]:
-    <span class="cm"># Strategy: section-based + sentence-based refinement</span>
-    sections = split_by_heading(text)
-    chunks = []
+            <pre><span class="kw">class</span> <span class="type">Consultation</span>(Base):
+    __tablename__ = <span class="str">"consultations"</span>
 
-    <span class="kw">for</span> section <span class="kw">in</span> sections:
-        <span class="cm"># If section > 512 tokens, split by sentences</span>
-        <span class="kw">if</span> count_tokens(section) > <span class="num">512</span>:
-            sub_chunks = split_by_sentences(section, target=<span class="num">256</span>)
-            chunks.extend(sub_chunks)
-        <span class="kw">else</span>:
-            chunks.append(section)
-
-    <span class="kw">return</span> chunks</pre>
+    id = Column(UUID, primary_key=<span class="kw">True</span>)
+    title = Column(String, nullable=<span class="kw">False</span>)
+    specialty = Column(Enum(Specialty), nullable=<span class="kw">False</span>)
+    urgency = Column(Enum(Urgency), nullable=<span class="kw">False</span>)
+    status = Column(Enum(ChatStatus), default=ChatStatus.OPEN)
+    gp_id = Column(UUID, ForeignKey(<span class="str">"users.id"</span>))
+    specialist_id = Column(UUID, ForeignKey(<span class="str">"users.id"</span>), nullable=<span class="kw">True</span>)</pre>
           </div>
 
-          <h3>Chunking Strategy</h3>
+          <h3>Database and Infrastructure</h3>
+          <p>We set up the foundational infrastructure that both the application and future RAG service would share:</p>
           <ul>
-            <li><strong>Primary:</strong> Split by document section/heading to preserve context</li>
-            <li><strong>Secondary:</strong> Split large sections into sentence-based chunks (256 tokens target)</li>
-            <li><strong>Result:</strong> Average chunk size ~200-300 tokens with good semantic boundaries</li>
+            <li><strong>PostgreSQL:</strong> Core database for users, consultations, messages, and audit logs</li>
+            <li><strong>pgvector extension:</strong> Installed early for future vector similarity search</li>
+            <li><strong>Redis:</strong> For session management and background task queuing</li>
+            <li><strong>Docker Compose:</strong> Multi-service development environment with hot reload</li>
           </ul>
 
-          <h3>Infrastructure Setup</h3>
-          <p>We also set up the database schema and vector DB infrastructure:</p>
-          <ul>
-            <li><strong>PostgreSQL:</strong> For document metadata and consultation history</li>
-            <li><strong>pgvector extension:</strong> For vector similarity search</li>
-            <li><strong>Ollama:</strong> For local embedding generation</li>
-            <li><strong>Redis:</strong> For caching and session management</li>
-          </ul>
-
-          <h3>Frontend Prototype</h3>
-          <p>In parallel, we created a prototype to show specialists our first draft UI, incorporating their feedback about evidence visibility and review workflows.</p>
+          <h3>Early RAG Exploration</h3>
+          <p>While the application layer was the priority, we began exploring the RAG pipeline in parallel — mainly researching chunking strategies and testing embedding models against our medical guideline corpus. The full RAG implementation would come later once the frontend and backend were stable.</p>
 
           <div class="post-diagram">
             <img src="assets/diagrams/document_ingestion_pipeline_snake.svg" alt="Document ingestion pipeline" />
-            <p class="post-diagram-caption">The complete ingestion pipeline from raw documents to indexed chunks</p>
+            <p class="post-diagram-caption">Early architecture planning for the ingestion pipeline from raw documents to indexed chunks</p>
           </div>
         </div>
       </article>
